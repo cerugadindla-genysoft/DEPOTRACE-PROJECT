@@ -1,0 +1,196 @@
+/* Global styles */
+body {
+    margin: 0;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+/* Main Container */
+.container {
+    display: flex;
+    height: 100%;
+}
+
+/* Left Section (Image Background) */
+.left-section {
+    width: 60%;
+    background: url('./background-img.avif') no-repeat center center;
+    background-size: cover;
+    position: relative;
+}
+
+.overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(156, 201, 246, 0.7); /* Blue overlay */
+}
+
+/* Right Section (Login Form) */
+.right-section {
+    width: 40%;
+    background: #F2F2F2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Login Box */
+.login-box {
+    width: 55%;
+    height: 65%;
+    text-align: center;
+    background: white;
+    padding: 20px;
+    border-radius: 20px;
+    
+}
+
+/* Logo */
+.logo {
+    width: 250px;
+    margin-top: 30px;
+    margin-bottom: -20px;
+}
+
+
+.input-group {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    padding: 5px;
+}
+
+.input-group i {
+    padding: 10px;
+    color: #a7a5a5;
+}
+
+.input-group input {
+    border: none;
+    outline: none;
+    padding: 0.5px;
+    flex: 1;
+}
+
+.password-group .eye-icon{
+    position: absolute;
+    right: 10px; 
+    top: 55%;
+    transform: translateY(-8%);
+    cursor: pointer;
+    color: #a7a5a5;
+    margin-right: 110px;
+    /* margin-bottom: -90px; */
+    margin-top: -14px;
+    
+    
+}
+
+.password-group input {
+    padding-right: 8px;
+     /* Adds space for the eye icon */
+}
+
+
+    
+    
+
+/* Remember Me Checkbox */
+.remember-me {
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+
+}
+/* Container for Login Button and Forgot Password */
+.login-actions {
+    display: flex;
+    align-items: center; /* Keep items aligned properly */
+    justify-content: space-between; /* Align everything to the left */
+    gap: 10px; /* Space between login button and forgot password */
+    margin-top: 40px; /* Adjust vertical spacing */
+}
+
+/* Login Button */
+.login-btn {
+    background: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 0; /* Ensure button is at the start */
+}
+
+/* Forgot Password Link */
+.forgot-password {
+    color: #6fabea;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+  
+/* Footer */
+footer {
+    width: 100%;
+    background: rgb(135, 206, 235);;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 3px 15px;
+    height: 40px;
+    position: fixed;
+    bottom: 0;
+    font-size: 14px;
+}
+
+/* Centered Privacy Policy */
+.privacy-policy {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%); /* Centering horizontally */
+    color: white;
+    text-decoration: underline;
+    font-weight: bold;
+     font-weight: 14px;
+}
+
+/* Social Media Icons */
+footer .social-icons {
+    display: flex;
+    gap:20px;
+    color:white;
+    font-size:22px;
+    margin-left: 30px;
+}
+
+/* Copyright Text */
+.copyright {
+    color:white;
+    font-size:14px;
+    margin-right: 50px;
+}
+
+.icon-style{
+    height: 40px;
+    width: 40px;
+}
+
+.inputvalues{
+    height: 37px;
+    /* color: #F2F2F2; */
+    background-color: white;
+    
+}
+.error {
+    color: red;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
