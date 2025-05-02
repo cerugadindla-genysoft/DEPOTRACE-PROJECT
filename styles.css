@@ -59,7 +59,8 @@ body {
 /* Logo Styling */
 .logo {
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
+    margin-top: 15px;
 }
 
 .logo img {
@@ -240,7 +241,7 @@ body {
     display: flex;
     align-items: center;
     gap: 40px;
-    font-size: 25px;
+    font-size: 18px;
     margin-right: 40px;
   }
   
@@ -258,6 +259,42 @@ body {
     border-radius: 50%;
     
   }
+  .profile-wrapper {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .logout-popup {
+    display: none;
+    position: absolute;
+    top: 110%; /* slightly below the image */
+    right: 0;
+    background: white;
+    color: black;
+    padding: 8px 16px;
+    border-radius: 2px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    font-weight: 200;
+    cursor: pointer;
+    white-space: nowrap;
+    z-index: 100;
+  }
+  
+  .logout-popup::after {
+    content: "";
+    position: absolute;
+    top: -10px;
+    right: 10px;
+    border-width: 6px;
+    border-style: solid;
+    border-color: transparent transparent white transparent;
+  }
+  
+
+
+  
+
+
   
   .dashboard-intro {
     margin-top: 30px;

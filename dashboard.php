@@ -22,7 +22,7 @@ $current_page = isset($_GET['page']) ? $_GET['page'] : 'dashboard';
         <img src="./depotracelogo.png" alt="DepotTrace Logo">
     </div>
     <ul class="menu">
-        <li><a href="dashboard.php?page=dashboard"><i class="fas fa-home"></i> Dashboard</a></li>
+        <li style="margin-left: -4.5px;"><a href="dashboard.php?page=dashboard"><i class="fas fa-home"></i> Dashboard</a></li>
         <li><a href="dashboard.php?page=parsedlogs"><i class="fas fa-file-alt"></i> ParsedLogs</a></li>
 
         <p class="section-title">Session Stats</p>
@@ -47,16 +47,24 @@ $current_page = isset($_GET['page']) ? $_GET['page'] : 'dashboard';
 <!-- Main Content -->
 <div class="main">
 
-    <?php if ($current_page === 'dashboard'): ?>
-    <!-- Header -->
+    <!-- Header: always shown -->
     <div class="header">
         <div class="left-icon" id="closeSidebar"><i class="fas fa-times"></i></div>
         <div class="left-icon" id="openSidebar" style="display: none;"><i class="fas fa-bars"></i></div>
         <div class="header-right">
-            <button id="themeToggle" class="theme-icon"><i class="ri-sun-line" style="color:#666"></i></button>
-            <img src="./profile img.jpeg" alt="" class="profile-img">
+            <button id="themeToggle" class="theme-icon">
+                <i class="ri-sun-line" style="color:#666"></i>
+            </button>
+            <div class="profile-wrapper">
+                <img src="./profile img.jpeg" alt="Profile" class="profile-img" id="profileImg">
+                <div class="logout-popup" id="logoutPopup" onclick="window.location.href='login.php'">
+                    Logout
+                </div>
+            </div>
         </div>
     </div>
+
+    <?php if ($current_page === 'dashboard'): ?>
 
     <!-- Dashboard Intro -->
     <div class="dashboard-intro">
@@ -86,11 +94,14 @@ $current_page = isset($_GET['page']) ? $_GET['page'] : 'dashboard';
     <!-- Charts -->
     <div class="dashboard-container">
         <div class="chart-section"><canvas id="lineChart" width="400" height="400"></canvas></div>
-        <div class="chart-section"><h3 style="color:#69b3dd; font-weight:500;">Sessions By Category</h3><canvas id="donutChart" width="60" height="400"></canvas></div>
+        <div class="chart-section">
+            <h3 style="color:#69b3dd; font-weight:500;">Sessions By Category</h3>
+            <canvas id="donutChart" width="60" height="400"></canvas>
+        </div>
     </div>
 
     <?php else: ?>
-        <!-- Include other page content -->
+        <!-- Include other pages -->
         <?php
         $page = basename($current_page);
         $file = "pages/{$page}.php";

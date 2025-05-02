@@ -124,6 +124,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
+
 document.addEventListener("DOMContentLoaded", function () {
     const closeBtn = document.getElementById("closeSidebar");
     const openBtn = document.getElementById("openSidebar");
@@ -144,6 +145,40 @@ document.addEventListener("DOMContentLoaded", function () {
         closeBtn.style.display = "block";
     });
 });
+const profileImg = document.getElementById("profileImg");
+const logoutPopup = document.getElementById("logoutPopup");
+
+profileImg.addEventListener("click", (e) => {
+  logoutPopup.style.display = logoutPopup.style.display === "block" ? "none" : "block";
+  e.stopPropagation();
+});
+
+document.addEventListener("click", () => {
+  logoutPopup.style.display = "none";
+});
+
+const themeToggle = document.getElementById("themeToggle");
+const icon = themeToggle.querySelector("i");
+
+themeToggle.addEventListener("click", () => {
+  if (icon.classList.contains("ri-sun-line")) {
+    icon.classList.remove("ri-sun-line");
+    icon.classList.add("ri-moon-line");
+  } else {
+    icon.classList.remove("ri-moon-line");
+    icon.classList.add("ri-sun-line");
+  }
+});
+
+
+
+
+
+
+
+
+
+
 
 
 

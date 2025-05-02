@@ -1,0 +1,44 @@
+body {
+    margin: 0;
+    font-family: Poppins, sans-serif;
+    font-weight: 500;
+    line-height: 1.6;
+    color: black;
+    background-color: #ffffff; /* white background */
+}
+
+.privacy-container {
+    
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0.5rem;
+    background-color: rgb(135, 206, 235); /* light sky blue */
+    border-top: 1px solid rgb(135, 206, 235);;
+    border-left: 1px solid rgb(135, 206, 235);;
+    border-right: 1px solid rgb(135, 206, 235);;
+    color: black;
+}
+
+.privacy-container h1 {
+    font-size: 40px;
+    margin:  0;     /* vertical spacing only */
+    padding: 10px 0;     /* vertical internal spacing only */
+    text-align: center;
+    
+    color: black;
+}
+
+.privacy-container h2 {
+    font-size: 20px;
+    margin-top: 0;
+    margin-bottom: 0;
+    color: black;
+}
+
+.privacy-container h2 + p {
+    margin-top: 0;
+}
+
+.privacy-container p {
+    font-size: 15px;
+}
