@@ -7,11 +7,11 @@ body {
     height: 100vh;
 }
 
-/* Main Container */
 .container {
     display: flex;
-    height: 100%;
+    height: 100vh; /* Key fix */
 }
+
 
 /* Left Section (Image Background) */
 .left-section {
@@ -28,48 +28,67 @@ body {
     background: rgba(156, 201, 246, 0.7); /* Blue overlay */
 }
 
-/* Right Section (Login Form) */
-.right-section {
+
+ .right-section {
     width: 40%;
     background: #F2F2F2;
     display: flex;
     align-items: center;
     justify-content: center;
-}
+    position: relative;  /* Ensure it's positioned correctly */
+    top: 0; /* Fix any movement caused by positioning */
+    transition: all 0.3s ease-out; /* Smooth transition if needed */
+} 
 
 
 
-/* Login Box */
-.login-box {
 
-    background-color: rgb(255, 255, 255);
-    color: rgba(0, 0, 0, 0.87);
-    box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 5px -3px, rgba(0, 0, 0, 0.14) 0px 8px 10px 1px, rgba(0, 0, 0, 0.12) 0px 3px 14px 2px;
-    width: 340px;
-    height: 420px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 20px;
-    position: static;
+    
+    /* Prevent shaking in the login box itself */
+    .login-box {
+        
+        width: 340px;
+        height: 420px;
+        margin: 0 auto; /* Ensure it stays centered */
+        position: static; /* Ensure it doesn't move */
+        transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1);
+        border-radius: 8px;
+        padding: 10px;
+        box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 5px -3px, rgba(0, 0, 0, 0.14) 0px 8px 10px 1px, rgba(0, 0, 0, 0.12) 0px 3px 14px 2px;
+        /* Optional: Remove any padding or margin causing the shaking */
+        background-color: rgb(255, 255, 255);
+        color: rgba(0, 0, 0, 0.87);
+        box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 5px -3px, rgba(0, 0, 0, 0.14) 0px 8px 10px 1px, rgba(0, 0, 0, 0.12) 0px 3px 14px 2px;
+        width: 340px;
+        height: 420px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 40px;
+        position: static;
+    
+        transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1);
+        border-radius: 8px;
+        padding: 0.1px; 
+    }
+    
+  
+    
 
-    transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1);
-    border-radius: 8px;
-    padding: 0.1px;
-}
     
     
 .login-credentials{
     text-align: center;
     color: #000000ce;
     font-size: 14px;
+    font-family: popins,sans-serif;
     font-weight: 540;
     margin-right: 20px;
     margin-bottom: 10px;
-}
+} 
 /* Logo */
 .logo {
     width: 240px;
-    margin-top: 60px;
+    margin-top: 50px;
     margin-bottom: -16px;
     margin-left: 40px;
 }
@@ -101,23 +120,192 @@ body {
     font-size: 14px;
 } */
 
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 45%; /* Center horizontally */
+    top: 0; /* Position at the top */
+    padding: 10px 0; /* Padding for top and bottom */
+    text-align: center;
+}
+
+.modal.show {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: #fff;
+  
+    padding: 1px;
+    border-radius: 12px;
+    font-size: 13px;
+    max-width: 160px;
+    height: 25px;
+    margin: 0 auto; /* Center the content */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Red circle with white cross */
+.error-icon {
+    font-size: 14px; /* Icon size */
+    color: white; /* White color for the cross */
+    background-color: red; /* Red background */
+    border-radius: 50%; /* Make it circular */
+    width: 35px; /* Circle diameter */
+    height: 25px; /* Circle diameter */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+    margin-top: 10px;
+    margin-right: 6px; /* Space between icon and text */
+}
+
+/* Error text */
+.error-message {
+    font-size: 14px;
+    font-family: popins,sans-serif;
+    margin-bottom: 10px;
+    margin-top: 15px;
+    color: black !important;
+    white-space: nowrap;
+}
+
+
+
+
+
+/* Modal styles */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 45%; /* Center horizontally */
+    top: 0; /* Position at the top */
+    padding: 20px 0; /* Padding for top and bottom */
+    text-align: center;
+}
+
+/* Modal content styles */
+.modal-content {
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 12px;
+    font-size: 13px;
+    max-width: 160px;
+    margin: 0 auto; /* Center the content */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Red circle with cross */
+.error-icon {
+    font-size: 14px; /* Icon size */
+    color: white; /* White color for the cross */
+    background-color: red; /* Red background */
+    border-radius: 50%; /* Make it circular */
+    width: 15px; /* Circle diameter */
+    height: 15px; /* Circle diameter */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 6px; /* Space between icon and text */
+}
+
+/* Error message styling */
+.error-message {
+    font-size: 13px;
+    color: black !important;
+    white-space: nowrap;
+}
+
+.error-msg {
+    color: red;
+    font-size: 14px;
+    margin-top: 1px;
+    margin-left: 15px;
+}
+
+.input-error {
+    border: 1px solid red !important;
+}
+
+
+.input-error .bi,
+.input-error .user-icon {
+    color: red!important;
+}
+
+.error-msg {
+    color: red;
+    font-size: 15px;
+   font-family: popins,sans-serif;
+    /* margin: -2 0 1px 10px; */
+    margin-left: 20px;
+    margin-top: -10px;
+    
+}
+
+.error-msg-inline {
+    color: red;
+    font-size: 16px;
+    margin-top: 5px;
+    display: none;
+}
+
+/* input[type="email"]:invalid {
+    box-shadow: none !important;
+    border: 0px solid #ccc 
+    outline: none !important;
+} */
+
+
+
+input[type="email"]:invalid {
+    box-shadow: none !important;
+    border: 0px solid #ccc !important; /* Light gray border */
+    outline: none !important;
+    color: black!important;
+    background-color: transparent !important; /* Optional: no red background */
+    color: inherit; /* Keeps your text color unchanged */
+}
+
+
+
+
+
+
+
 
  .input-group {
     display: flex;
     align-items: center;
     background: #fff;
     border: 1px solid #ccc;
-    height: 25px;
+    height: 23px;
     color: #ccc;
     width: 260px;
-    margin-bottom: 15px;
+    margin-bottom: 25px;
     padding: 7px 11px;
     font-size: 16px;
     line-height: 1.5;
+    margin-bottom: 20px;
     border-radius: 8px;
     margin-left: 20px;
-    margin-top: 20px;
+    margin-top: 3px;
 
+}
+.inputvalues::placeholder {
+    color: #ccc; 
+    font-family: popins,sans-serif;
+    font-size: 14px;
+    font-family: popins,sans-serif;
 }
 
 .input-group:hover {
@@ -129,18 +317,44 @@ body {
 .input-group i {
     padding: 1px;
     color: black;
+    font-size: 18px;
     
+}
+.material-symbols-outlined {
+    font-size: 12px;
+    color: black;
+    padding-right: 1px;
+   }
+
+
+
+   
+   input[type="email"].valid-email {
+    color: black!important;
 }
 
 .input-group input {
     border: none;
     outline: none;
     padding: 7px;
-    color: #ccc;
+    color: black;
     flex: 0.5;
-    height: 25px;
+    height: 23px;
+}
+.input-group {
+    margin-bottom: 20px;
+  }
+
+  .error-message {
+    color: red;
+    font-size: 0.9rem;
+    margin-top: 4px;
 }
 
+
+   
+  
+  
 
 
 
@@ -151,13 +365,14 @@ body {
     top: 55%;
     transform: translateY(-60%);
     cursor: pointer;
-    font-size: 16px;
+    font-size: 20px;
     font-weight: lighter;
   } 
 
    .password-group input {
     padding-right: 55px;
     padding-left: 7px; 
+    
    }  
 
   /* Chrome, Edge, Safari */
@@ -204,8 +419,9 @@ input[type="password"] {
 
 /* Remember Me Checkbox */
 .remember-me {
-    font-size: 13.7143px;
+    font-size: 14px;
     font-weight: 500;
+    font-family: popins,sans-serif;
     display: flex;
     align-items: center;
     margin-top: 30px;
@@ -230,6 +446,8 @@ input[type="password"] {
     border-radius: 6px;
     color: #eee6e6;
     font-size: 16px;
+    cursor: pointer;
+    font-family: popins,sans-serif;
     padding: 9px 10px;
     font-weight: 530;
     margin-top: -10px;
@@ -249,11 +467,13 @@ input[type="password"] {
     background-color: transparent;
     outline: none;
     cursor: pointer;
+    font-family: popins,sans-serif;
     transition: color 0.3s;
     text-decoration: none;
     font-size: 15px;
     margin-top: -10px;
-    margin-right: 25px;
+    margin-right: 40px;
+    
 }
 
 .forgot-password:hover{
@@ -263,7 +483,7 @@ input[type="password"] {
 /* Footer */
 footer {
     width: 100%;
-    background: #87CEEB;
+    background: rgb(135, 206, 235);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -277,12 +497,13 @@ footer {
 /* Centered Privacy Policy */
 .privacy-policy {
     position: absolute;
+    font-family: popins,sans-serif;
     left: 50%;
     transform: translateX(-50%); /* Centering horizontally */
     color: #ffffff;
     text-decoration: underline;
     font-weight: 530;
-     font-size: 16px;
+     font-size: 14px;
      padding: 0px 50px 0px 0px ;
 }
 
@@ -318,11 +539,17 @@ footer .social-icons a {
 
 /* Copyright Text */
 .copyright {
-    color:#ffffff;
+    color: white;
+    font-size: 16px;
+    text-align: left;
+    padding-right: 50px;
+    font-family: popins,sans-serif;
+    font-weight: 400;
+    /* color:#ffffff;
     font-size:16px;
     font-weight: 400;
     margin-right: 50px;
-    padding: 0px 50px 0px 0px ;
+    padding: 0px 50px 0px 0px ; */
 }
 
 .icon-style{
@@ -340,14 +567,4 @@ footer .social-icons a {
     color: red;
     font-weight: bold;
     margin-top: 10px;
-}
-
-
-
-.material-symbols-outlined {
-  font-variation-settings:
-  'FILL' 0,
-  'wght' 100,
-  'GRAD' 0,
-  'opsz' 24
 }

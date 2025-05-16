@@ -1,22 +1,5 @@
 <?php
 session_start();
-
-
-
-
-$servername = "localhost";
-$username = "root";
-$password = "";
-$database = "depotrace-login";
-
-// Create connection
-$conn = new mysqli($servername, $username, $password, $database);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
 $backgroundImages = [
     "https://plus.unsplash.com/premium_photo-1661333820879-517c5e808bfe?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8bGF3eWVyfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60",
     "https://images.unsplash.com/photo-1521066505762-e50557b7b6fc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fGp1c3RpY2V8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60",
@@ -40,13 +23,39 @@ $backgroundImages = [
     "https://images.unsplash.com/photo-1447023029226-ef8f6b52e3ea?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fGxhd3llcnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60",
 ];
 
-
 // $randomImage = $backgroundImages[array_rand($backgroundImages)];
-if (!isset($_SESSION['randomImage']) || $_SERVER['REQUEST_METHOD'] !== 'POST') {
-    $_SESSION['randomImage'] = $backgroundImages[array_rand($backgroundImages)];
+// On GET request: pick a new image and save in session
+if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+    $_SESSION['bgImage'] = $backgroundImages[array_rand($backgroundImages)];
 }
 
-$randomImage = $_SESSION['randomImage'];
+// Always use the session image (set either on GET or preserved on POST)
+$randomImage = $_SESSION['bgImage'] ?? $backgroundImages[0];
+
+
+
+
+
+
+$servername = "localhost";
+$username = "root";
+$password = "";
+$database = "depotrace-login";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $database);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+
+
+
+
+
+
 
 
 
@@ -98,15 +107,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 
 
-
-
-
-
-
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -138,10 +138,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 <div class="container">
     <!-- Left Section -->
-   <div  class="left-section" style="background: url('<?php echo $randomImage; ?>') no-repeat center center; background-size: cover;">  
-   <!-- <div class="left-section" style="background-image: url('<?php echo $randomImage; ?>');"> -->
-   
-
+   <div  class="left-section" style="background: url('<?php echo $randomImage; ?>') no-repeat center center; background-size: cover;">
         <div class="overlay"></div>
     </div>
    
@@ -330,6 +327,13 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
+
+
+    
+
+       
+
+    
 
 
 

@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Privacy Policy</title>
+    
+    <title>DepoTrace</title>
+    <link rel="icon" type="image/x-icon" href="./depotrace-fevicon.png">
     <link rel="stylesheet" href="privacy.css">
 </head>
 <body>
