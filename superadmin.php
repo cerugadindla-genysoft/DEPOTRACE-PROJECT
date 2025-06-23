@@ -1,19 +1,11 @@
-
-
-
 <?php
-session_start();
-
-if (!isset($_SESSION['email']) || $_SESSION['email'] !== 'depotrace.sadm@gmail.com') {
-    header("Location: login.php");
+if (!isset($_GET['page'])) {
+    // Redirect to createuser by default
+    header("Location: superadmin.php?page=createuser");
     exit;
 }
+$current_page = $_GET['page'];
 ?>
-
-
-
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -53,13 +45,13 @@ if (!isset($_SESSION['email']) || $_SESSION['email'] !== 'depotrace.sadm@gmail.c
         <img src="./depotracelogo.png" alt="DepotTrace Logo">
     </div>
     <ul class="menu">
-        
-
-        <p class="section-title">User Management</p>
+    <p class="section-title">User Management</p>
         <li><a href="superadmin.php?page=createuser"><i class="fas fa-user-plus"></i> CreateUser</a></li>
         <li><a href="superadmin.php?page=admin"><i class="fas fa-user-shield"></i> Admin</a></li>
         <li><a href="superadmin.php?page=team"><i class="fas fa-users"></i> Team</a></li>
         <li><a href="superadmin.php?page=customers"><i class="fas fa-user-friends"></i> Customers</a></li>
+
+        
     </ul>
 </div>
 
@@ -83,11 +75,10 @@ if (!isset($_SESSION['email']) || $_SESSION['email'] !== 'depotrace.sadm@gmail.c
         </div>
     </div>
 
-
-<?php
+    <?php
     $current_page = $_GET['page'] ?? 'superadmin'; 
   ?>
-
+  
   <?php
         $page = basename($current_page);
         $file = "superadmin/{$page}.php";
@@ -104,5 +95,3 @@ if (!isset($_SESSION['email']) || $_SESSION['email'] !== 'depotrace.sadm@gmail.c
 
 
     <script src="script.js"></script>
-</body>
-</html>

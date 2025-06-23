@@ -590,7 +590,11 @@ body.dark-mode .form-group.error .required-star {
   color: red!important;
 }
 
-body.superadmin-createuser.dark-mode .header {
+/* body.superadmin-createuser.dark-mode .header {
+  background-color: #1f1f3d !important;
+} */
+
+body.dark-mode .header {
   background-color: #1f1f3d !important;
 }
 
@@ -679,8 +683,8 @@ body.superadmin-createuser.dark-mode select {
       <span class="static-label">Status <span class="required-star">*</span></span>
       <select name="isActive">
         <option value="" disabled selected></option>
-        <option>true</option>
-        <option>false</option>
+        <option>Active</option>
+        <option>Inactive</option>
       </select>
       <span class="custom-arrow">▼</span>
     </div>

@@ -84,7 +84,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                  header("Location: superadmin.php");
                    exit;
                } elseif ($emailFromDB === 'depotrace.user@gmail.com') {
-                header("Location: user.php");
+                header("Location: userdashboard.php");
              exit;
               } else {
               header("Location: dashboard.php");

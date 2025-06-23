@@ -130,25 +130,22 @@ body.superadmin-createuser.dark-mode .header {
         <img src="./depotracelogo.png" alt="DepotTrace Logo">
     </div>
     <ul class="menu">
-        <li style="margin-left: -4.5px;"><a href="dashboard.php?page=dashboard"><i class="fas fa-home"></i> Dashboard</a></li>
-        <li><a href="dashboard.php?page=parsedlogs"><i class="fas fa-file-alt"></i> ParsedLogs</a></li>
+        <li style="margin-left: -4.5px;"><a href="userdashboard.php?page=dashboard"><i class="fas fa-home"></i> Dashboard</a></li>
+        <li><a href="userdashboard.php?page=parsedlogs"><i class="fas fa-file-alt"></i> ParsedLogs</a></li>
 
         <p class="section-title">Session Stats</p>
-        <li><a href="dashboard.php?page=daily"><i class="fas fa-calendar-day"></i> Daily</a></li>
-        <li><a href="dashboard.php?page=monthly"><i class="fas fa-calendar-week"></i> Monthly</a></li>
-        <li><a href="dashboard.php?page=yearly"><i class="fas fa-calendar-alt"></i> Yearly</a></li>
+        <li><a href="userdashboard.php?page=daily"><i class="fas fa-calendar-day"></i> Daily</a></li>
+        <li><a href="userdashboard.php?page=monthly"><i class="fas fa-calendar-week"></i> Monthly</a></li>
+        <li><a href="userdashboard.php?page=yearly"><i class="fas fa-calendar-alt"></i> Yearly</a></li>
 
         <p class="section-title">Sessions Overview</p>
-        <li><a href="dashboard.php?page=sessions"><i class="fas fa-chart-line"></i> Sessions</a></li>
+        <li><a href="userdashboard.php?page=sessions"><i class="fas fa-chart-line"></i> Sessions</a></li>
 
         <p class="section-title">User Stats</p>
-        <li><a href="dashboard.php?page=breakdown"><i class="fas fa-chart-pie"></i> Breakdown</a></li>
-        <li><a href="dashboard.php?page=geography"><i class="fas fa-globe"></i> Geography</a></li>
+        <li><a href="userdashboard.php?page=breakdown"><i class="fas fa-chart-pie"></i> Breakdown</a></li>
+        <li><a href="userdashboard.php?page=geography"><i class="fas fa-globe"></i> Geography</a></li>
 
-        <p class="section-title">User Management</p>
-        <li><a href="dashboard.php?page=team"><i class="fas fa-users"></i> Team</a></li>
-        <li><a href="dashboard.php?page=createuser"><i class="fas fa-user-plus"></i> CreateUser</a></li>
-        <li><a href="dashboard.php?page=customers"><i class="fas fa-user-friends"></i> Customers</a></li>
+       
     </ul>
 </div>
 
@@ -165,47 +162,21 @@ body.superadmin-createuser.dark-mode .header {
             </button>
           
 
-            <!-- <div class="profile-wrapper">
+            <div class="profile-wrapper">
                 <img src="./profile img.jpeg" alt="Profile" class="profile-img" id="profileImg">
                 <div class="logout-popup" id="logoutPopup" onclick="window.location.href='login.php'">
                     Logout
-                </div> -->
-                <div class="profile-wrapper">
-    <img src="./profile img.jpeg" alt="Profile" class="profile-img" id="profileImg">
-    <div class="logout-popup" id="logoutPopup">
-        <form id="uploadForm" action="upload_profile.php" method="POST" enctype="multipart/form-data">
-            <label for="profileUpload" style="cursor: pointer; display: block; margin-bottom: 8px; color: #333;">Upload Profile</label>
-            <input type="file" id="profileUpload" name="profileImage" style="display: none;" onchange="document.getElementById('uploadForm').submit();" />
-        </form>
-        <!-- <hr style="margin: 6px 0;"> -->
-        <a href="login.php" >Logout</a>
-    </div>
+                </div>
             </div>
         </div>
     </div>
 
     <?php
-if (isset($_FILES['profileImage'])) {
-    $target_dir = "uploads/";
-    $target_file = $target_dir . basename($_FILES["profileImage"]["name"]);
-
-    // Optionally check image type, size etc.
-    if (move_uploaded_file($_FILES["profileImage"]["tmp_name"], $target_file)) {
-        echo "Profile uploaded successfully.";
-        // Save $target_file path in DB if needed
-    } else {
-        echo "Error uploading file.";
-    }
-}
+$current_page = $_GET['page'] ?? 'userdashboard'; // default to 'dashboard' if not set
 ?>
 
-
-    <?php
-$current_page = $_GET['page'] ?? 'dashboard'; // default to 'dashboard' if not set
-?>
-
-    <!-- <?php if ($current_page === 'dashboard'): ?> -->
-
+  
+<?php if ($current_page === 'dashboard'): ?>
     <!-- Dashboard Intro -->
     <div class="dashboard-intro">
         <h3>DASHBOARD</h3>
@@ -239,29 +210,26 @@ $current_page = $_GET['page'] ?? 'dashboard'; // default to 'dashboard' if not s
             <canvas id="donutChart" width="60" height="400"></canvas>
         </div>
     </div>
-
-
-    <?php else: ?>
-        <!-- Include other pages -->
-        <?php
-        $page = basename($current_page);
-        $file = "pages/{$page}.php";
-        if (file_exists($file)) {
-            include($file);
-        } else {
-            echo "<p>Page not found.</p>";
-        }
-        ?>
     <?php endif; ?>
 
-    <!-- <?php $page = $_GET['page'] ?? 'dashboard'; ?> -->
-<!-- <body class="<?= $page ?>"> -->
+    
+    <?php
+if ($current_page !== 'dashboard') {
+    $page = basename($current_page);
+    $file = "user/{$page}.php";
 
-<!-- <?php $page = $_GET['page'] ?? 'dashboard'; ?> -->
-<!-- <body class="superadmin-<?= $page ?>"> -->
+    if (file_exists($file)) {
+        include $file;
+    } else {
+        echo "<p style='color:red;'>Page not found: {$file}</p>";
+    }
+}
+?>
 
-<!-- <?php $page = $_GET['page'] ?? 'dashboard'; ?> -->
-<!-- <body class="<?= $page ?> superadmin-<?= $page ?>"> -->
+    
+
+
+   
 
 
 </div>

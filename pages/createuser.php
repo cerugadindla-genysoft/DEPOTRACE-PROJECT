@@ -9,13 +9,19 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/css/intlTelInput.css"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/intlTelInput.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/utils.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/css/intlTelInput.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/intlTelInput.min.js"></script>
 
 
 </head>
 
 
 <style>
- 
+  body.dark-mode .header {
+  background-color: #21295c !important;
+}
+
+
 .header-right .theme-icon i {
   font-size: 24px;
   vertical-align: middle;
@@ -29,7 +35,7 @@
 }
 .theme-icon i {
   font-size: 24px;
-  transform: translateY(8px); /* move icon down */
+  transform: translateY(8px); 
   display: inline-block;
   margin-left: 8px;
   font-weight: 400;
@@ -701,9 +707,42 @@ body.dark-mode .sidebar .menu li:hover i {
 #themeToggle::-moz-focus-inner {
   border: 0 !important;
 }
+/* Shift the flag down a few pixels */
+.iti__flag-container {
+  top: 8px !important;  /* Adjust this value as needed */
+  position: absolute !important;
+}
 
+/* Also make sure the input wrapper behaves consistently */
+.iti {
+  width: 100% !important;
+  position: relative;
+}
 
+.iti input[type="tel"] {
+  width: 100% !important;
+  /* height: 44px;   */
+  padding: 18px 16px;
+  padding-left: 50px !important;  /* Ensure there's space for flag */
+  font-size: 14px;
+  background-color: #f2f2f2;
+  border: none;
+  border-bottom: 2px solid #ccc;
+  box-sizing: border-box;
+  padding-bottom: 8px!important;
+  line-height: 1.9; 
+  border-radius: 3px;
+ 
+  
+}
 
+  .form-row.phone-number-row {
+  margin-top: 20px;  /* or padding-top */
+}
+
+#phoneNumber {
+  margin-top: 6px; /* Adjust the value as needed (e.g., 6px–10px) */
+}
 
 
 
@@ -781,8 +820,8 @@ body.dark-mode .sidebar .menu li:hover i {
       <span class="static-label">Status <span class="required-star">*</span></span>
       <select name="isActive">
         <option value="" disabled selected></option>
-        <option>true</option>
-        <option>false</option>
+        <option>Active</option>
+        <option>Inactive</option>
       </select>
       <span class="custom-arrow">▼</span>
     </div>
@@ -811,7 +850,9 @@ body.dark-mode .sidebar .menu li:hover i {
   <div class="form-group">
     <div class="input-wrapper">
       <span class="static-label">Phone Number <span class="required-star">*</span></span>
-      <input type="tel" name="phoneNumber" />
+      <!-- <input type="tel" name="phoneNumber" /> -->
+      <input type="tel" name="phoneNumber" id="phoneNumber" />
+
     </div>
     <span class="error-message"></span>
   </div>
@@ -1106,6 +1147,51 @@ document.querySelectorAll('.input-wrapper select').forEach(select => {
       updateStarColor();
     });
   });
+
+  // phoneNumber 
+ 
+document.addEventListener("DOMContentLoaded", function () {
+  const input = document.querySelector("#phoneNumber");
+
+  const iti = window.intlTelInput(input, {
+    initialCountry: "auto",
+    preferredCountries: ["in", "us", "gb"],
+    geoIpLookup: function (callback) {
+      fetch('https://ipapi.co/json')
+        .then(res => res.json())
+        .then(data => {
+          callback(data.country_code.toLowerCase());
+        })
+        .catch(() => {
+          callback("us");
+        });
+    },
+    utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/utils.min.js"
+  });
+
+  // Validate phone number
+  input.addEventListener("blur", function () {
+    const formGroup = input.closest(".form-group");
+    const error = formGroup.querySelector(".error-message");
+
+    if (input.value.trim()) {
+      if (!iti.isValidNumber()) {
+        formGroup.classList.add("error");
+        error.textContent = "Invalid phone number";
+      } else {
+        formGroup.classList.remove("error");
+        error.textContent = "";
+      }
+    }
+  });
+
+  // Optional: You can access full international number like this
+  window.getFullPhoneNumber = function () {
+    return iti.getNumber();
+  };
+});
+
+
 </script>
 
 </body>
