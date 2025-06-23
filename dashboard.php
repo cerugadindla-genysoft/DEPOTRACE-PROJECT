@@ -1,7 +1,12 @@
+ 
 <?php
-include 'data.php'; // Import data
-$current_page = isset($_GET['page']) ? $_GET['page'] : 'dashboard';
+ include 'data.php'; 
+ $current_page = isset($_GET['page']) ? $_GET['page'] : 'dashboard';
 ?>
+
+
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -17,6 +22,95 @@ $current_page = isset($_GET['page']) ? $_GET['page'] : 'dashboard';
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
+<style>
+
+    /* Default light mode */
+.header {
+  background-color: #f2f2f2;
+  transition: background-color 0.3s ease;
+}
+
+/* Dark mode */
+body.dark-mode .header {
+  background-color: #21295c; 
+}
+
+    body.dark-mode {
+  --bg-color: #191f45;
+  --text-color: #FFE3A3;
+    }
+
+    #toggleDark:focus,
+#toggleDark:active,
+#toggleDark:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+/* Highlight background and make all text/icon white on hover */
+.menu li:hover {
+  background-color: #33B0FF;
+}
+
+.menu li:hover a {
+  color: white !important; /* text */
+}
+
+.menu li:hover i {
+  color: white !important; /* icon */
+}
+
+
+
+/* Header left-side icon (close/open icon) in dark mode */
+body.dark-mode .left-icon,
+body.dark-mode #openSidebar i {
+    color: white;
+}
+body.dark-mode .theme-icon i {
+  color: white; /* icon becomes white in dark mode */
+}
+/* Default icon color */
+#themeToggle i {
+  color: #666;
+  transition: color 0.3s ease;
+}
+
+/* Make icon white when dark mode is active */
+body.dark-mode #themeToggle i {
+  color: #fff !important;
+}
+
+
+
+/* Dark mode styles only for Create User page */
+
+body.dark-mode .createuser-content h5 {
+  color: #FFF6E0 !important;
+}
+
+body.dark-mode .createuser-content p {
+  color: #FFF3A3 !important;
+}
+
+body.dark-mode .createuser-content button[type="submit"] {
+  background-color:  #FFF6E0 !important;
+  
+}
+
+
+
+body.superadmin-createuser.dark-mode .header {
+  background-color: #1f1f3d !important;
+}
+
+
+
+
+
+</style>
+
+
 
 <!-- Sidebar -->
 <div class="sidebar">
@@ -57,6 +151,8 @@ $current_page = isset($_GET['page']) ? $_GET['page'] : 'dashboard';
             <button id="themeToggle" class="theme-icon">
                 <i class="ri-sun-line" style="color:#666"></i>
             </button>
+          
+
             <div class="profile-wrapper">
                 <img src="./profile img.jpeg" alt="Profile" class="profile-img" id="profileImg">
                 <div class="logout-popup" id="logoutPopup" onclick="window.location.href='login.php'">
@@ -66,7 +162,11 @@ $current_page = isset($_GET['page']) ? $_GET['page'] : 'dashboard';
         </div>
     </div>
 
-    <?php if ($current_page === 'dashboard'): ?>
+    <?php
+$current_page = $_GET['page'] ?? 'dashboard'; // default to 'dashboard' if not set
+?>
+
+    <!-- <?php if ($current_page === 'dashboard'): ?> -->
 
     <!-- Dashboard Intro -->
     <div class="dashboard-intro">
@@ -102,6 +202,7 @@ $current_page = isset($_GET['page']) ? $_GET['page'] : 'dashboard';
         </div>
     </div>
 
+
     <?php else: ?>
         <!-- Include other pages -->
         <?php
@@ -114,6 +215,16 @@ $current_page = isset($_GET['page']) ? $_GET['page'] : 'dashboard';
         }
         ?>
     <?php endif; ?>
+
+    <!-- <?php $page = $_GET['page'] ?? 'dashboard'; ?> -->
+<!-- <body class="<?= $page ?>"> -->
+
+<!-- <?php $page = $_GET['page'] ?? 'dashboard'; ?> -->
+<!-- <body class="superadmin-<?= $page ?>"> -->
+
+<!-- <?php $page = $_GET['page'] ?? 'dashboard'; ?> -->
+<!-- <body class="<?= $page ?> superadmin-<?= $page ?>"> -->
+
 
 </div>
 

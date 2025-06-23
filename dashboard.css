@@ -2,7 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: Poppins, sans-serif;
 }
 
 body {
@@ -18,7 +18,7 @@ body {
 .sidebar {
     width: 250px;
     height: 100vh;
-    background: #172b58;
+    background: #21295c;
     color: white;
     padding: 0px;
     position: fixed;
@@ -69,68 +69,77 @@ body {
 
 /* Menu Styling */
 .menu {
-    list-style: none;
-    padding: 0;
+  list-style: none;
+  padding: 0;
 }
 .menu li {
-    position: relative;
-    padding:6px 6px;
-    display: flex;
-    align-items: center;
-    border-radius: 0px;
-    width: 100%;
-    transition: all 0.3s ease;
-  }
+  position: relative;
+  padding:6px 6px;
+  display: flex;
+  align-items: center;
+  border-radius: 0px;
+  width: 100%;
+  transition: all 0.3s ease;
+}
 
-  
-  .menu li a {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    color: white;
-    padding: 12px 20px 12px 30px;
-    font-size: 14px;
-    width: 100%;
-  }
-  
-  .menu li i {
-    margin-right: 10px;
-    font-size: 16px;
-    color: #33ccff;
-    padding-left: 20px;
-    padding: 3px 3px 2px 50px;
-    transition: color 0.3s ease;
-  }
-  
-  /* Hover effect */
-  .menu li:hover {
-    background-color: #00bfff;
-  }
-  
-  .menu li:hover a {
-    color: white;
-  }
-  
-  .menu li:hover i {
-    color: white;
-  }
-  
-  /* Arrow icon appears only on hover */
-  .menu li::after {
-    content: "›";
-    font-size: 16px;
-    color: white;
-    position: absolute;
-    right: 15px;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
-  
-  .menu li:hover::after {
-    opacity: 1;
-  }
-  
 
+/* .menu li a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: white;
+  padding: 12px 20px 12px 30px;
+  font-size: 14px;
+  width: 100%;
+} */
+.menu li a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: white; /* or #fff if you prefer */
+  font-weight: 400;
+  padding: 12px 20px 12px 30px;
+  font-size: 14px;
+  width: 100%;
+  transition: color 0.3s ease;
+}
+
+.menu li i {
+  margin-right: 10px;
+  font-size: 16px;
+  color: #33ccff;
+  padding-left: 20px;
+  padding: 3px 3px 2px 50px;
+  transition: color 0.3s ease;
+}
+
+/* Hover effect */
+.menu li:hover {
+  background-color: #00bfff;
+}
+
+.menu li:hover a {
+  color: white;
+}
+
+.menu li:hover i {
+  color: white;
+}
+
+/* Arrow icon appears only on hover */
+.menu li::after {
+  content: "›";
+  font-size: 16px;
+  color: white;
+  position: absolute;
+  right: 15px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.menu li:hover::after {
+  opacity: 1;
+}
 /* .menu li {
     padding: 6px 5px;
     display: flex;
@@ -193,7 +202,12 @@ body {
     transition: all 0.3s ease;
   }
   
-  
+ 
+
+
+
+
+
  
   
 
@@ -201,20 +215,18 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color:#e6e4e4;
+    background-color:#f2f2f2;
     padding: 10px 20px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    min-height: 64px;
   }
 
- /* Optional left icon */
-/* .left-icon {
-    font-size: 20px;
-    color: #666;
-  } */
+
   .left-icon {
-    font-size: 20px;
+    font-size: 15px;
     color: #666;
     cursor: pointer;
+    font-weight: lighter;
     padding: 10px;
     border-radius: 5px;
     transition: background 0.2s ease;
@@ -225,7 +237,7 @@ body {
 }
 #openSidebar i {
     cursor: pointer;
-    font-size: 22px;
+    font-size: 16px;
     color: #666;
 }
 
@@ -251,12 +263,14 @@ body {
     color: #666;
     cursor: pointer;
     margin-right: -20px;
+    margin-top: 20px;
   }
   
   .profile-img {
-    width: 40px;
-    height: 40px;
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
+    object-fit: cover;
     
   }
   .profile-wrapper {
@@ -324,6 +338,38 @@ body.dark-mode {
     --text-color: #e0d587;
 }
 
+#darkModeToggle, .darkmode-toggle {
+  background: none;
+  border: none;
+  outline: none;
+  padding: 0;
+  margin: 0;
+  box-shadow: none;
+  width: auto;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+#darkModeToggle i, .darkmode-toggle i {
+  color: #333; /* or any preferred icon color */
+  font-size: 20px;
+}
+
+/* Remove blue highlight on click */
+#darkModeToggle:focus, .darkmode-toggle:focus {
+  outline: none;
+  box-shadow: none;
+}
+#toggleDark:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+
+
 body {
     background-color: var(--bg-color);
     color: var(--text-color);
@@ -384,7 +430,7 @@ body {
 
 /* Individual Card */
 .card {
-    background: rgb(240, 240, 240);
+    background: #f2f2f2;
     padding: 20px;
     width: 30%;
     height: 200px;
@@ -468,9 +514,10 @@ body {
     height: 300px !important;
 }
 
-    
 
 
- 
+
+
+
 
 

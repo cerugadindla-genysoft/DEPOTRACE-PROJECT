@@ -1,22 +1,5 @@
 <?php
 session_start();
-
-
-
-
-$servername = "localhost";
-$username = "root";
-$password = "";
-$database = "depotrace-login";
-
-// Create connection
-$conn = new mysqli($servername, $username, $password, $database);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
 $backgroundImages = [
     "https://plus.unsplash.com/premium_photo-1661333820879-517c5e808bfe?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8bGF3eWVyfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60",
     "https://images.unsplash.com/photo-1521066505762-e50557b7b6fc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fGp1c3RpY2V8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60",
@@ -40,15 +23,24 @@ $backgroundImages = [
     "https://images.unsplash.com/photo-1447023029226-ef8f6b52e3ea?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fGxhd3llcnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60",
 ];
 
+$randomImage = $backgroundImages[array_rand($backgroundImages)];
 
-// $randomImage = $backgroundImages[array_rand($backgroundImages)];
-if (!isset($_SESSION['randomImage']) || $_SERVER['REQUEST_METHOD'] !== 'POST') {
-    $_SESSION['randomImage'] = $backgroundImages[array_rand($backgroundImages)];
+
+
+
+
+
+
+$servername = "localhost";
+$username = "root";
+$password = "";
+$database = "depotrace_logins";
+
+// DB connection
+$conn = new mysqli($servername, $username, $password, $database);
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
 }
-
-$randomImage = $_SESSION['randomImage'];
-
-
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $_SESSION['emailError'] = null;
@@ -60,45 +52,58 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $isValid = true;
 
     if (empty($email)) {
-        $_SESSION['emailError'] = "Please enter your registered email  address";
+        $_SESSION['emailError'] = "Please enter your email";
         $isValid = false;
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $_SESSION['emailError'] = "Please enter a valid email address";
+        $_SESSION['emailError'] = "Invalid email format";
         $isValid = false;
     }
 
     if (empty($password)) {
-        $_SESSION['passwordError'] = "Please input your password";
+        $_SESSION['passwordError'] = "Please enter your password";
         $isValid = false;
     }
 
     if ($isValid) {
-        $hashedPassword = hash("sha256", $password);
-        $stmt = $conn->prepare("SELECT * FROM users WHERE email = ? AND password = ?");
-        $stmt->bind_param("ss", $email, $hashedPassword);
+        $stmt = $conn->prepare("SELECT email, password FROM users WHERE email = ?");
+        $stmt->bind_param("s", $email);
         $stmt->execute();
-        $result = $stmt->get_result();
+        $stmt->store_result();
 
-        if ($result->num_rows === 1) {
-            $_SESSION["email"] = $email;
-            header("Location: dashboard.php");
-            exit();
-             } else {
-            $_SESSION['authError'] = "error : Invalid password";
+        if ($stmt->num_rows === 1) {
+            $stmt->bind_result($emailFromDB, $hashedPassword);
+            $stmt->fetch();
+
+            if (password_verify($password, $hashedPassword)) {
+                // ✅ Set session
+                $_SESSION['email'] = $emailFromDB;
+                $_SESSION['loggedin'] = true;
+
+                // ✅ Strict email-based redirection
+               if ($emailFromDB === 'depotrace.sadm@gmail.com') {
+                 header("Location: superadmin.php");
+                   exit;
+               } elseif ($emailFromDB === 'depotrace.user@gmail.com') {
+                header("Location: user.php");
+             exit;
+              } else {
+              header("Location: dashboard.php");
+            exit;
+                }
+            } else {
+                $_SESSION['authError'] = "Invalid email or password";
+            }
+        } else {
+            $_SESSION['authError'] = "Invalid email or password";
         }
+
+        $stmt->close();
     }
 
-    // Reload the page so errors are visible only once
     header("Location: login.php");
-    exit();
+    exit;
 }
-
 ?>
-
-
-
-
-
 
 
 
@@ -123,7 +128,44 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
+<style>
+/* Paste the above CSS here */
+input[type="email"] {
+  border: none;
+  outline: none;
+  box-shadow: none;
+}
 
+input[type="email"]:focus {
+  outline: none !important;
+  box-shadow: none !important;
+  border-color: none !important;
+}
+
+input[type="email"]:focus:valid {
+  outline: none !important;
+  box-shadow: none !important;
+  border-color: #ccc !important;
+}
+
+input[type="email"]:valid {
+  outline: none !important;
+  box-shadow: none !important;
+  border-color: none !important;
+}
+
+input[type="email"]:-webkit-autofill,
+input[type="email"]:focus:-webkit-autofill {
+  box-shadow: 0 0 0 1000px white inset !important;
+  -webkit-box-shadow: 0 0 0 1000px white inset !important;
+  outline: none !important;
+  border-color: none !important;
+}
+
+input[type="email"]:focus::-moz-focus-inner {
+  border: 0;
+}
+</style>
 
 <?php if (isset($_SESSION['authError'])): ?>
     <div id="errorModal" class="modal show">
@@ -138,10 +180,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 <div class="container">
     <!-- Left Section -->
-   <div  class="left-section" style="background: url('<?php echo $randomImage; ?>') no-repeat center center; background-size: cover;">  
-   <!-- <div class="left-section" style="background-image: url('<?php echo $randomImage; ?>');"> -->
-   
-
+   <div  class="left-section" style="background: url('<?php echo $randomImage; ?>') no-repeat center center; background-size: cover;">
         <div class="overlay"></div>
     </div>
    
@@ -157,11 +196,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
            
             <form method="POST" action="login.php" novalidate>
-            <div class="input-group <?php echo isset($_SESSION['emailError']) ? 'input-error' : ''; ?>">
-    <i class="bi bi-person user-icon"></i>
-    <input type="email" name="email" placeholder="Email" class="inputvalues"
-                        value="<?php echo isset($_POST['email']) ? htmlspecialchars($_POST['email']) : ''; ?>">
-                </div>
+    <div class="input-group <?php echo isset($_SESSION['emailError']) ? 'input-error' : ''; ?>">
+        <i class="bi bi-person user-icon"></i>
+        <input type="email" name="email" placeholder="Email" class="inputvalues"
+            value="<?php echo isset($_POST['email']) ? htmlspecialchars($_POST['email']) : ''; ?>">
+    </div>
+
               
                 <?php if (isset($_SESSION['emailError'])): ?>
     <div id="emailError" class="error-msg">
@@ -191,6 +231,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 <?php if (isset($_SESSION['authError'])): ?>
                     <div id="authError" class="error-msg"><?php echo $_SESSION['authError']; ?></div>
                 <?php endif; ?>
+                <input type="hidden" name="backgroundImage" value="<?php echo htmlspecialchars($randomImage); ?>">
 
                 
              
@@ -279,21 +320,22 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Check for errors
         const startsWithAt = value.startsWith("@");
-        const invalidLocalPart = !/^[a-zA-Z]*$/.test(localPart);
+
+        // Allow only letters and dots in local part, no starting/ending dot, no consecutive dots
+        const validLocalPart = /^[a-zA-Z]+(\.[a-zA-Z]+)*$/.test(localPart);
 
         // Update text color to black
         emailInput.style.color = "black";
 
-        if (startsWithAt || invalidLocalPart) {
-            emailErrorDiv.textContent = "Please enter a valid email address ";
-            emailInput.classList.add("input-error");
+        if (startsWithAt || !validLocalPart) {
+            emailErrorDiv.textContent = "Please enter a valid email address";
+            // emailInput.classList.add("input-error");
         } else {
             emailErrorDiv.textContent = "";
-            emailInput.classList.remove("input-error");
+            // emailInput.classList.remove("input-error");
         }
     });
 });
-
 
      
 // popup model
@@ -330,6 +372,42 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
+// ajax
+document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById("loginForm");
+    const errorDiv = document.getElementById("error-message");
+
+    form.addEventListener("submit", function (e) {
+        e.preventDefault(); // prevent page reload
+
+        const formData = new FormData(form);
+
+        fetch("process_login.php", {
+            method: "POST",
+            body: formData
+        })
+        .then((res) => res.json())
+        .then((data) => {
+            if (data.success) {
+                window.location.href = "dashboard.php"; // or wherever you redirect on success
+            } else {
+                errorDiv.textContent = data.message;
+                errorDiv.style.display = "block";
+            }
+        })
+        .catch((err) => {
+            errorDiv.textContent = "Something went wrong!";
+            errorDiv.style.display = "block";
+        });
+    });
+});
+
+
+    
+
+       
+
+    
 
 
 

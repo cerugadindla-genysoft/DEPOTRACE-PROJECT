@@ -42,6 +42,81 @@ body {
 
 
 
+ 
+input[type="email"] {
+    outline: none;
+    border: 1px solid #ccc; /* normal border */
+    box-shadow: none;
+  }
+  
+  /* Remove focus outline and shadow */
+  input[type="email"]:focus {
+    outline: none !important;
+    box-shadow: none !important;
+    border-color: #ccc !important;
+  }
+  
+  /* Remove focus outline and glow on valid inputs */
+  input[type="email"]:focus:valid {
+    outline: none !important;
+    box-shadow: none !important;
+    border-color: #ccc !important;
+  }
+  
+  /* Override Chrome's native validation glow */
+  input[type="email"]:valid {
+    outline: none !important;
+    box-shadow: none !important;
+    border-color: #ccc !important;
+  }
+  
+  /* For Chrome autofill styling */
+  input[type="email"]:-webkit-autofill,
+  input[type="email"]:focus:-webkit-autofill {
+    box-shadow: 0 0 0 1000px white inset !important;
+    -webkit-box-shadow: 0 0 0 1000px white inset !important;
+    outline: none !important;
+  }
+  
+  /* Disable the focus ring in Firefox */
+  input[type="email"]:focus::-moz-focus-inner {
+    border: 0;
+  }
+  
+  /* Disable the blue highlight in Edge */
+  input[type="email"]:-ms-input-placeholder {
+    color: transparent;
+  }
+  
+  
+
+
+  
+  
+  
+  
+  
+  
+   
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+
+
+  
+
+
+  
+
 
     
     /* Prevent shaking in the login box itself */

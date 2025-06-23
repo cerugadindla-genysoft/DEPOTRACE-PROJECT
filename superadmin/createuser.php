@@ -2,7 +2,6 @@
 
 
 <head>
-<link rel="stylesheet" href="assets/css/dashboard.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/css/intlTelInput.css"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/intlTelInput.min.js"></script>
 
@@ -13,10 +12,10 @@
 
 </head>
 
+<body class="<?= $current_page ?> superadmin-<?= $current_page ?>">
 
 <style>
- 
-.header-right .theme-icon i {
+   .header-right .theme-icon i {
   font-size: 24px;
   vertical-align: middle;
   line-height: 1;
@@ -54,100 +53,6 @@
   outline: none !important;
   box-shadow: none !important;
 }
-
-
-
-
-.left-icon:hover {
-    background: #dcdcdc; /* light background on hover */
-}
-#openSidebar i {
-    cursor: pointer;
-    font-size: 16px;
-    color: #666;
-}
-
-#openSidebar:hover {
-    background-color: #dcdcdc;
-    border-radius: 5px;
-}
-
-
-  
-  /* Right section of the header */
-  .header-right {
-    display: flex;
-    align-items: center;
-    gap: 40px;
-    font-size: 18px;
-    margin-right: 40px;
-  }
-  
-  /* Light mode icon */
-  .light-mode-icon {
-    font-size: 30px;
-    color: #666;
-    cursor: pointer;
-    margin-right: -20px;
-    margin-top: 20px;
-  }
-  
-  .profile-img {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    object-fit: cover;
-    
-  }
-  .profile-wrapper {
-    position: relative;
-    display: inline-block;
-  }
-  
-  .logout-popup {
-    display: none;
-    position: absolute;
-    top: 110%; /* slightly below the image */
-    right: 0;
-    background: white;
-    color: black;
-    padding: 8px 16px;
-    border-radius: 2px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-    font-weight: 200;
-    cursor: pointer;
-    white-space: nowrap;
-    z-index: 100;
-  }
-  
-  .logout-popup::after {
-    content: "";
-    position: absolute;
-    top: -10px;
-    right: 10px;
-    border-width: 6px;
-    border-style: solid;
-    border-color: transparent transparent white transparent;
-  }
-  
-
-
-  
-
-
-  
-  
-  
- 
-.theme-icon {
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    color: var(--text-color); /* or #666 */
-    cursor: pointer;
-    margin-right: 15px;
-}
-
    body {
   font-family: 'Poppins', sans-serif;
   background-color: #fff;
@@ -164,6 +69,15 @@
   background-color: var(--bg-color);
   color: var(--text-color);
 }
+body.superadmin-createuser.dark-mode .header {
+  background-color: #1f1f3d !important; /* Dark background */
+  color: #FFF6E0 !important; /* Light text */
+}
+
+body.superadmin-createuser.dark-mode .header i {
+  color: #FFF6E0 !important;
+}
+
 
 /* Light Mode Defaults (if no dark mode is applied)  */
 :root {
@@ -554,6 +468,7 @@ body.dark-mode .createuser-content button[type="submit"] {
   
 }
 
+
 /* Dark mode styles for CREATE USER page */
 body.dark-mode #createUserPage h5 {
   color: #FFF6E0;
@@ -648,7 +563,7 @@ body.dark-mode textarea {
 body.dark-mode input:hover,
 body.dark-mode select:hover,
 body.dark-mode textarea:hover {
-  /* background-color: #191F45 !important;  */
+  background-color: #191F45 !important; /* slightly darker background */
   border-bottom: 1px solid white !important;
 }
 
@@ -656,7 +571,7 @@ body.dark-mode textarea:hover {
 body.dark-mode input:focus,
 body.dark-mode select:focus,
 body.dark-mode textarea:focus {
-  background-color:#191F45 !important;
+  background-color:#191F45 important;
   border-bottom: 1px solid white !important;
   outline: none !important;
   box-shadow: none !important;
@@ -674,38 +589,21 @@ body.dark-mode .required-star {
 body.dark-mode .form-group.error .required-star {
   color: red!important;
 }
-body.dark-mode .sidebar .menu li i {
-  color: #33B0FF !important;
+
+body.superadmin-createuser.dark-mode .header {
+  background-color: #1f1f3d !important;
 }
 
-body.dark-mode .sidebar .menu li:hover i {
-  color: #ffffff !important;
+body.superadmin-createuser.dark-mode .createuser-content h5 {
+  color: #FFF6E0 !important;
 }
 
-
-#themeToggle,
-#themeToggle *,
-#themeToggle:focus,
-#themeToggle:active,
-#themeToggle:focus-visible,
-#themeToggle i,
-#themeToggle i:focus,
-#themeToggle i:active,
-#themeToggle i:focus-visible {
-  outline: none !important;
-  box-shadow: none !important;
-  border: none !important;
-  -webkit-tap-highlight-color: transparent !important;
+body.superadmin-createuser.dark-mode input,
+body.superadmin-createuser.dark-mode select {
+  background-color: #191f45 !important;
+  color: white !important;
+  border-bottom: 1px solid white !important;
 }
-
-#themeToggle::-moz-focus-inner {
-  border: 0 !important;
-}
-
-
-
-
-
 
 
 </style>

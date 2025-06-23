@@ -354,3 +354,158 @@ document.addEventListener("DOMContentLoaded", function () {
 
 </body>
 </html>
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Create User</title>
+  <style>
+    body {
+      font-family: 'popins', sans-serif;
+      background-color: #fff;
+      margin: 0px;
+    }
+
+    h2 {
+      color: #2AA9E0;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    p {
+      color: #2AA9E0;
+      margin-bottom: 30px;
+    }
+
+    .container {
+      max-width: 1100px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      
+    }
+
+    .form-row {
+      display: flex;
+      gap: 20px;
+    }
+ 
+   .form-row.full-width {
+    flex-direction: column;
+}
+
+   .form-row.full-width input,
+   .form-row.full-width select {
+  width: 100%;
+}
+
+    
+
+    
+    input,
+    select {
+      background-color: #f2f2f2;
+      border: none;
+      border-bottom: 2px solid #ccc;
+      border-radius: 8px 8px 0 0;
+      padding: 18px 16px;
+      font-size: 14px;
+      width: 50%;
+      box-sizing: border-box;
+      color: #333;
+    }
+
+    .button-row {
+      justify-content: flex-end;
+    }
+
+
+  
+    button {
+      padding: 12px 24px;
+      background-color: #2AA9E0;
+      border: none;
+      color: white;
+      font-weight: bold;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #1f90c0;
+    }
+    input:focus,
+   select:focus {
+    outline: none;            /* removes the default blue/black outline */
+    border-bottom-color: #999; /* keep the same border color or customize */
+    box-shadow: none;         /* removes any shadow */
+}
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>CREATE USER</h2>
+    <p>Create a New User Profile</p>
+    <form>
+      <div class="form-row">
+        <input type="text" placeholder="First Name *" required />
+        <input type="text" placeholder="Last Name *" required />
+      </div>
+      <div class="form-row">
+        <input type="text" placeholder="User Name *" required />
+        <input type="password" placeholder="Password *" required />
+      </div>
+      <div class="form-row">
+        <input type="text" placeholder="Organization Name *" required />
+        <select required>
+          <option value="" disabled selected>Role *</option>
+          <option>Admin</option>
+          <option>User</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <select required>
+          <option value="" disabled selected>Status *</option>
+          <option>Active</option>
+          <option>Inactive</option>
+        </select>
+        <input type="text" placeholder="Occupation" />
+      </div>
+      <div class="form-row full-width">
+        <input type="email" placeholder="Email *" required />
+      </div>
+      <div class="form-row full-width">
+        <input type="tel" placeholder="Phone Number *" required />
+      </div>
+      <div class="form-row full-width">
+        <input type="text" placeholder="City" />
+      </div>
+      <div class="form-row full-width">
+        <select>
+          <option value="" disabled selected>Country</option>
+          <option>India</option>
+          <option>USA</option>
+        </select>
+      </div>
+      <div class="form-row full-width">
+        <select>
+          <option value="" disabled selected>State</option>
+          <option>Maharashtra</option>
+          <option>California</option>
+        </select>
+      </div>
+      <div class="form-row button-row">
+        <button type="submit">CREATE NEW USER</button>
+      </div>
+    </form>
+  </div>
+</body>
+</html>

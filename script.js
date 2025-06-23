@@ -168,21 +168,10 @@ themeToggle.addEventListener("click", () => {
     icon.classList.remove("ri-moon-line");
     icon.classList.add("ri-sun-line");
   }
+
 });
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+  
 
