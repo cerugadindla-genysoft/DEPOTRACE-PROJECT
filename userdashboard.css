@@ -53,6 +53,62 @@ body {
 }
 
 
+.profile-img {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  object-fit: cover;
+  cursor: pointer;
+}
+
+.profile-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+/* Smaller dropdown */
+.logout-popup {
+  display: none;
+  position: absolute;
+  top: 105%;
+  right: 0;
+  background: white;
+  color: black!important;
+  padding: 6px 12px;
+  border-radius: 4px;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
+  font-size: 13px;
+  font-weight: 400;
+  cursor: pointer;
+  white-space: nowrap;
+  z-index: 100;
+}
+
+/* Smaller arrow */
+.logout-popup::after {
+  content: "";
+  position: absolute;
+  top: -8px;
+  right: 10px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent white transparent;
+}
+
+/* Upload label and logout div styles */
+.logout-popup label,
+.logout-popup div {
+  display: block;
+  padding: 3px 0;
+  color: black;
+  cursor: pointer;
+}
+
+/* Optional: subtle hover effect */
+.logout-popup label:hover,
+.logout-popup div:hover {
+  text-decoration: none!important;
+}
 
 
 

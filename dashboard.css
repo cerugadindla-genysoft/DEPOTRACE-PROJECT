@@ -316,12 +316,12 @@ body {
     color: black;
     cursor: pointer;
   }
+
+    
+
+    
   
-  /* Optional: subtle hover effect */
-  .logout-popup label:hover,
-  .logout-popup div:hover {
-    text-decoration: none;
-  }
+
   
 
   
@@ -531,6 +531,37 @@ body {
     width: 300px !important;
     height: 300px !important;
 }
+/* .left-icon,
+.left-icon:focus,
+.left-icon:focus-visible,
+.left-icon:active {
+  all: unset;
+  background: transparent !important;
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
+  -webkit-appearance: none !important;
+  appearance: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+} */
+.left-icon a,
+.left-icon a:visited,
+.left-icon a i {
+    color: #666 !important;
+    text-decoration: none;
+}
+#openSidebar i,
+.left-icon i,
+.left-icon {
+    color: #666 !important;
+}
+/* Only target the header left icon */
+.header .left-icon i {
+  color: #666 !important;
+}
+
+
+
 
 
 

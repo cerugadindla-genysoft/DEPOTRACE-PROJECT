@@ -1,6 +1,5 @@
 
 
-
 <head>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/css/intlTelInput.css"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/intlTelInput.min.js"></script>
@@ -608,7 +607,98 @@ body.superadmin-createuser.dark-mode select {
   color: white !important;
   border-bottom: 1px solid white !important;
 }
+.profile-img {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    object-fit: cover;
+    cursor: pointer;
+  }
+  
+  .profile-wrapper {
+    position: relative;
+    display: inline-block;
+  }
+  
+  /* Smaller dropdown */
+  .logout-popup {
+    display: none;
+    position: absolute;
+    top: 105%;
+    right: 0;
+    background: white;
+    color: black!important;
+    padding: 6px 12px;
+    border-radius: 4px;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
+    font-size: 13px;
+    font-weight: 400;
+    cursor: pointer;
+    white-space: nowrap;
+    z-index: 100;
+  }
+  
+  /* Smaller arrow */
+  .logout-popup::after {
+    content: "";
+    position: absolute;
+    top: -8px;
+    right: 10px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent white transparent;
+  }
+  
+  /* Upload label and logout div styles */
+  .logout-popup label,
+  .logout-popup div {
+    display: block;
+    padding: 3px 0;
+    color: black;
+    cursor: pointer;
+  }
+  
+  /* Optional: subtle hover effect */
+  .logout-popup label:hover,
+  .logout-popup div:hover {
+    text-decoration: none;
+  }
+  /* Shift the flag down a few pixels */
+.iti__flag-container {
+  top: 8px !important;  /* Adjust this value as needed */
+  position: absolute !important;
+}
 
+/* Also make sure the input wrapper behaves consistently */
+.iti {
+  width: 100% !important;
+  position: relative;
+}
+
+.iti input[type="tel"] {
+  width: 100% !important;
+  /* height: 44px;   */
+  padding: 18px 16px;
+  padding-left: 50px !important;  /* Ensure there's space for flag */
+  font-size: 14px;
+  background-color: #f2f2f2;
+  border: none;
+  border-bottom: 2px solid #ccc;
+  box-sizing: border-box;
+  padding-bottom: 8px!important;
+  line-height: 1.9; 
+  border-radius: 3px;
+ 
+  
+}
+
+  .form-row.phone-number-row {
+  margin-top: 20px;  /* or padding-top */
+}
+
+#phoneNumber {
+  margin-top: 6px; /* Adjust the value as needed (e.g., 6px–10px) */
+}
 
 </style>
 
@@ -618,7 +708,7 @@ body.superadmin-createuser.dark-mode select {
     <h5>CREATE USER</h5>
     <p>Create a New User Profile</p>
    
-    <form id="userForm" method="POST" action="pages/insertuser.php" novalidate>
+    <form id="userForm" method="POST" action="superadmin/insertuser.php" novalidate>
 
     <!-- <div class="createuser-form"> -->
     <div class="form-row">
@@ -713,7 +803,8 @@ body.superadmin-createuser.dark-mode select {
   <div class="form-group">
     <div class="input-wrapper">
       <span class="static-label">Phone Number <span class="required-star">*</span></span>
-      <input type="tel" name="phoneNumber" />
+      <!-- <input type="tel" name="phoneNumber" /> -->
+      <input type="tel" name="phoneNumber" id="phoneNumber" />
     </div>
     <span class="error-message"></span>
   </div>
@@ -1008,6 +1099,49 @@ document.querySelectorAll('.input-wrapper select').forEach(select => {
       updateStarColor();
     });
   });
+
+   // phoneNumber 
+ 
+document.addEventListener("DOMContentLoaded", function () {
+  const input = document.querySelector("#phoneNumber");
+
+  const iti = window.intlTelInput(input, {
+    initialCountry: "auto",
+    preferredCountries: ["in", "us", "gb"],
+    geoIpLookup: function (callback) {
+      fetch('https://ipapi.co/json')
+        .then(res => res.json())
+        .then(data => {
+          callback(data.country_code.toLowerCase());
+        })
+        .catch(() => {
+          callback("us");
+        });
+    },
+    utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/utils.min.js"
+  });
+
+  // Validate phone number
+  input.addEventListener("blur", function () {
+    const formGroup = input.closest(".form-group");
+    const error = formGroup.querySelector(".error-message");
+
+    if (input.value.trim()) {
+      if (!iti.isValidNumber()) {
+        formGroup.classList.add("error");
+        error.textContent = "Invalid phone number";
+      } else {
+        formGroup.classList.remove("error");
+        error.textContent = "";
+      }
+    }
+  });
+
+  // Optional: You can access full international number like this
+  window.getFullPhoneNumber = function () {
+    return iti.getNumber();
+  };
+});
 </script>
 
 </body>

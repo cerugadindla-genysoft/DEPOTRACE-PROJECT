@@ -67,10 +67,15 @@ $current_page = $_GET['page'];
                 <i class="ri-sun-line" style="color:#666"></i>
             </button>
             <div class="profile-wrapper">
-                <img src="./profile img.jpeg" alt="Profile" class="profile-img" id="profileImg">
-                <div class="logout-popup" id="logoutPopup" onclick="window.location.href='login.php'">
-                    Logout
-                </div>
+    <img src="./profile img.jpeg" alt="Profile" class="profile-img" id="profileImg">
+    <div class="logout-popup" id="logoutPopup">
+        <form id="uploadForm" action="upload_profile.php" method="POST" enctype="multipart/form-data">
+            <label for="profileUpload" style="cursor: pointer; display: block; margin-bottom: 8px; color: #333;">Upload Profile</label>
+            <input type="file" id="profileUpload" name="profileImage" style="display: none;" onchange="document.getElementById('uploadForm').submit();" />
+        </form>
+        <!-- <hr style="margin: 6px 0;"> -->
+        <a href="login.php" >Logout</a>
+    </div>
             </div>
         </div>
     </div>

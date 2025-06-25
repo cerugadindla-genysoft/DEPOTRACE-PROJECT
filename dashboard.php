@@ -157,7 +157,7 @@ body.superadmin-createuser.dark-mode .header {
 
     <!-- Header: always shown -->
     <div class="header">
-        <div class="left-icon" id="closeSidebar"><i class="fas fa-times"></i></div>
+        <div class="left-icon" id="closeSidebar"  role="button"><i class="fas fa-times"></i></div>
         <div class="left-icon" id="openSidebar" style="display: none;"><i class="fas fa-bars"></i></div>
         <div class="header-right">
             <button id="themeToggle" class="theme-icon">
@@ -166,6 +166,11 @@ body.superadmin-createuser.dark-mode .header {
           
 
             <!-- <div class="profile-wrapper">
+                <img src="./profile img.jpeg" alt="Profile" class="profile-img" id="profileImg">
+                <div class="logout-popup" id="logoutPopup" onclick="window.location.href='login.php'">
+                    Logout
+                </div> -->
+                <!-- <div class="profile-wrapper">
                 <img src="./profile img.jpeg" alt="Profile" class="profile-img" id="profileImg">
                 <div class="logout-popup" id="logoutPopup" onclick="window.location.href='login.php'">
                     Logout
@@ -183,6 +188,8 @@ body.superadmin-createuser.dark-mode .header {
             </div>
         </div>
     </div>
+   
+    
 
     <?php
 if (isset($_FILES['profileImage'])) {

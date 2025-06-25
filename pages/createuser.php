@@ -1,6 +1,4 @@
 
-
-
 <head>
 <link rel="stylesheet" href="assets/css/dashboard.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/css/intlTelInput.css"/>
@@ -32,6 +30,7 @@
   align-items: center;
   justify-content: center;
   min-height: 10px;
+  color: #666;
 }
 .theme-icon i {
   font-size: 24px;
@@ -745,6 +744,17 @@ body.dark-mode .sidebar .menu li:hover i {
 }
 
 
+.left-icon a,
+.left-icon a:visited,
+.left-icon a i {
+    color: #666 !important;
+    text-decoration: none;
+}
+#openSidebar i,
+.left-icon i,
+.left-icon {
+    color: #666 !important;
+}
 
 
 </style>
@@ -1189,6 +1199,33 @@ document.addEventListener("DOMContentLoaded", function () {
   window.getFullPhoneNumber = function () {
     return iti.getNumber();
   };
+});
+
+
+document.getElementById('userForm').addEventListener('submit', async function (e) {
+  e.preventDefault(); // prevent form from submitting normally
+
+  const form = e.target;
+  const formData = new FormData(form);
+
+  try {
+    const response = await fetch('pages/insertuser.php', {
+      method: 'POST',
+      body: formData
+    });
+
+    const result = await response.text();
+
+    if (response.ok) {
+      // Show success message
+      alert('✅ User created successfully!');
+      form.reset();
+    } else {
+      alert('❌ Failed to create user: ' + result);
+    }
+  } catch (error) {
+    alert('⚠️ Error: ' + error.message);
+  }
 });
 
 
