@@ -1202,31 +1202,32 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
-document.getElementById('userForm').addEventListener('submit', async function (e) {
-  e.preventDefault(); // prevent form from submitting normally
+// document.getElementById('userForm').addEventListener('submit', async function (e) {
+//   e.preventDefault(); // prevent form from submitting normally
 
-  const form = e.target;
-  const formData = new FormData(form);
+//   const form = e.target;
+//   const formData = new FormData(form);
 
-  try {
-    const response = await fetch('pages/insertuser.php', {
-      method: 'POST',
-      body: formData
-    });
+//   try {
+//     const response = await fetch('pages/insertuser.php', {
+//       method: 'POST',
+//       body: formData
+//     });
 
-    const result = await response.text();
+//     const result = await response.text();
 
-    if (response.ok) {
-      // Show success message
-      alert('✅ User created successfully!');
-      form.reset();
-    } else {
-      alert('❌ Failed to create user: ' + result);
-    }
-  } catch (error) {
-    alert('⚠️ Error: ' + error.message);
-  }
-});
+//     if (response.ok) {
+//       // Show success message
+//       alert('✅ User created successfully!');
+//       form.reset();
+//     } else {
+//       alert('❌ Failed to create user: ' + result);
+//     }
+//   } catch (error) {
+//     alert('⚠️ Error: ' + error.message);
+//   }
+  
+// });
 
 
 </script>

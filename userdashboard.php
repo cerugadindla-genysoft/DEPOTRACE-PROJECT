@@ -1,15 +1,36 @@
- 
 <?php
+session_start();
+
+// Block unauthenticated access
+if (!isset($_SESSION['email'])) {
+    header("Location: login.php");
+    exit;
+}
+
 include 'data.php';
 
-// ✅ Redirect to dashboard by default
+// ✅ Redirect to dashboard if no page provided
 if (!isset($_GET['page'])) {
     header("Location: userdashboard.php?page=dashboard");
     exit;
 }
 
 $current_page = $_GET['page'];
+$page = basename($current_page);
+$file = __DIR__ . "/user/{$page}.php";
+
+// ✅ If page is not "dashboard" and file doesn't exist, show clean 404 and stop
+if ($page !== 'dashboard' && !file_exists($file)) {
+    http_response_code(404);
+    include '404.php';
+    exit;
+}
 ?>
+
+
+
+
+
 
 
 
@@ -175,7 +196,10 @@ body.superadmin-createuser.dark-mode .header {
             <input type="file" id="profileUpload" name="profileImage" style="display: none;" onchange="document.getElementById('uploadForm').submit();" />
         </form>
         <!-- <hr style="margin: 6px 0;"> -->
-        <a href="login.php" >Logout</a>
+        <!-- <a href="login.php" >Logout</a> -->
+        <form id="logoutForm" method="POST" action="logout.php" style="display:none;"></form>
+<a href="#" onclick="document.getElementById('logoutForm').submit();">Logout</a>
+
     </div>
             </div>
         </div>
@@ -220,21 +244,27 @@ $current_page = $_GET['page'] ?? 'userdashboard'; // default to 'dashboard' if n
             <canvas id="donutChart" width="60" height="400"></canvas>
         </div>
     </div>
+
     <?php endif; ?>
 
     
+
     <?php
 if ($current_page !== 'dashboard') {
-    $page = basename($current_page);
-    $file = "user/{$page}.php";
+  $page = basename($current_page);
+  $file = __DIR__ . "/user/{$page}.php";
 
-    if (file_exists($file)) {
-        include $file;
-    } else {
-        echo "<p style='color:red;'>Page not found: {$file}</p>";
-    }
+  if (file_exists($file)) {
+      include $file;
+  } else {
+      http_response_code(404); // optional but good for SEO
+      include '404.php';
+      exit;
+  }
 }
+
 ?>
+
 
     
 

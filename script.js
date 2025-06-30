@@ -171,6 +171,8 @@ themeToggle.addEventListener("click", () => {
 
 });
 
+
+
 document.getElementById("closeSidebar").addEventListener("keydown", function(e) {
     if (e.key === "Enter" || e.key === " ") {
       e.preventDefault();

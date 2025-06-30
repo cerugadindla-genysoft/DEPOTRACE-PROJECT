@@ -267,8 +267,8 @@ body {
   }
   
   .profile-img {
-    width: 28px;
-    height: 28px;
+    width: 34px;
+    height: 34px;
     border-radius: 50%;
     object-fit: cover;
     cursor: pointer;
@@ -531,7 +531,7 @@ body {
     width: 300px !important;
     height: 300px !important;
 }
-/* .left-icon,
+.left-icon,
 .left-icon:focus,
 .left-icon:focus-visible,
 .left-icon:active {
@@ -543,7 +543,7 @@ body {
   -webkit-appearance: none !important;
   appearance: none !important;
   -webkit-tap-highlight-color: transparent !important;
-} */
+}
 .left-icon a,
 .left-icon a:visited,
 .left-icon a i {
@@ -559,14 +559,22 @@ body {
 .header .left-icon i {
   color: #666 !important;
 }
+/* Dark mode for TEAM page elements */
+body.dark-mode .team-header h2,
+body.dark-mode .team-header p,
+body.dark-mode .team-toolbar {
+  color: #FFF6E0;
+}
 
+body.dark-mode .team-toolbar {
+  background-color: #21295c;
+  border-color: #444;
+}
 
+body.dark-mode .toolbar-button {
+  color: #FFF3A3;
+}
 
-
-
-
-
-
-
-
-
+body.dark-mode .toolbar-button:hover {
+  color: #ffffff;
+}

@@ -1,8 +1,28 @@
- 
 <?php
- include 'data.php'; 
- $current_page = isset($_GET['page']) ? $_GET['page'] : 'dashboard';
+session_start();
+
+// ✅ Block unauthenticated users
+if (!isset($_SESSION['email'])) {
+    header("Location: login.php");
+    exit;
+}
+
+include 'data.php';
+
+$current_page = $_GET['page'] ?? 'dashboard';
+$page = basename($current_page); // sanitize
+$file_path = __DIR__ . "/pages/{$page}.php";
+
+// ✅ If page is not "dashboard" and file doesn't exist, show only 404 (no layout)
+if ($page !== 'dashboard' && !file_exists($file_path)) {
+    http_response_code(404);
+    include __DIR__ . '/404.php';
+    exit;
+}
 ?>
+
+
+  
 
 
 
@@ -117,7 +137,9 @@ body.superadmin-createuser.dark-mode .header {
 }
 
 
-
+body.dark-mode .left-icon i {
+  color: white !important;
+}
 
 
 </style>
@@ -183,7 +205,10 @@ body.superadmin-createuser.dark-mode .header {
             <input type="file" id="profileUpload" name="profileImage" style="display: none;" onchange="document.getElementById('uploadForm').submit();" />
         </form>
         <!-- <hr style="margin: 6px 0;"> -->
-        <a href="login.php" >Logout</a>
+        <!-- <a href="login.php" >Logout</a> -->
+        <form id="logoutForm" method="POST" action="logout.php" style="display:none;"></form>
+<a href="#" onclick="document.getElementById('logoutForm').submit();">Logout</a>
+
     </div>
             </div>
         </div>
@@ -207,11 +232,9 @@ if (isset($_FILES['profileImage'])) {
 ?>
 
 
-    <?php
-$current_page = $_GET['page'] ?? 'dashboard'; // default to 'dashboard' if not set
-?>
 
-    <!-- <?php if ($current_page === 'dashboard'): ?> -->
+
+     <?php if ($current_page === 'dashboard'): ?> 
 
     <!-- Dashboard Intro -->
     <div class="dashboard-intro">
@@ -247,19 +270,11 @@ $current_page = $_GET['page'] ?? 'dashboard'; // default to 'dashboard' if not s
         </div>
     </div>
 
-
     <?php else: ?>
-        <!-- Include other pages -->
-        <?php
-        $page = basename($current_page);
-        $file = "pages/{$page}.php";
-        if (file_exists($file)) {
-            include($file);
-        } else {
-            echo "<p>Page not found.</p>";
-        }
-        ?>
-    <?php endif; ?>
+      <!-- ✅ Include dynamic page -->
+      <?php include $file_path; ?>
+  <?php endif; ?>
+
 
     <!-- <?php $page = $_GET['page'] ?? 'dashboard'; ?> -->
 <!-- <body class="<?= $page ?>"> -->
