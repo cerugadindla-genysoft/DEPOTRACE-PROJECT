@@ -13,6 +13,7 @@
     .team-header {
       padding: 20px;
     }
+
   /* Header left-side icon (close/open icon) in dark mode */
 body.dark-mode .left-icon,
 body.dark-mode #openSidebar i {
@@ -421,6 +422,93 @@ thead th {
   color: #e0e0e0;
   font-family: poppins, sans-serif;
 }
+/* Prevent layout collapse when all columns are hidden */
+.table-wrapper table {
+  min-height: 200px; /* Adjust this as needed */
+  position: relative;
+}
+
+/* Optional: show placeholder row if table appears empty */
+.table-wrapper table tbody:empty::before {
+  content: "All columns are hidden";
+  display: block;
+  text-align: center;
+  padding: 60px 0;
+  color: #999;
+  font-size: 14px;
+}
+/* DENSITY STYLES */
+.table-density-compact td, 
+.table-density-compact th {
+  padding: 4px 6px;
+  font-size: 12px;
+}
+
+.table-density-standard td, 
+.table-density-standard th {
+  padding: 10px 8px;
+  font-size: 14px;
+}
+
+.table-density-comfortable td, 
+.table-density-comfortable th {
+  padding: 16px 10px;
+  font-size: 16px;
+}
+.filter-dropdown {
+  display: none;
+  position: absolute;
+  top: 40px; /* adjust based on toolbar height */
+  left: 20px; /* adjust to align under FILTERS button */
+  background: white;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  padding: 15px;
+  border-radius: 8px;
+  z-index: 1000;
+  width: 650px;
+  font-family: 'Roboto', sans-serif;
+}
+
+.filter-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 15px;
+}
+
+.filter-remove {
+  cursor: pointer;
+  font-size: 14px;
+  color: #333;
+  margin-top: 22px;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  /* padding-right: 20px; */
+}
+
+.filter-group label {
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 4px;
+}
+
+.filter-group select,
+.filter-group input {
+  padding: 6px 10px;
+  border: none;
+  border-bottom: 1px solid #ccc;
+  font-size: 14px;
+  background: transparent;
+  outline: none;
+  color: #333;
+}
+
+.filter-dropdown.show {
+  display: block;
+}
 
 
   </style>
@@ -463,6 +551,52 @@ thead th {
 </div>
       <div class="toolbar-button"><i class="fas fa-filter"></i> FILTERS</div>
 
+      <!-- Filter dropdown -->
+<div class="filter-dropdown" id="filterDropdown">
+  <div class="filter-row">
+    <span class="filter-remove">✕</span>
+    <div class="filter-group">
+      <label>Columns</label>
+      <select>
+      <option>First Name</option>
+      <option>Last Name</option>
+      <option>User Name</option>
+      <option>Password</option>
+      <option>Organization</option>
+      <option>Role</option>
+      <option>Status</option>
+      <option>Occupation</option>
+      <option>Email</option>
+      <option>Phone Number</option>
+      <option>City</option>
+      <option>State</option>
+      <option>Country</option>
+
+      
+      </select>
+    </div>
+
+    <div class="filter-group">
+      <label>Operator</label>
+      <select>
+        <option>contains</option>
+        <option>equals</option>
+        <option>starts with</option>
+        <option>ends with</option>
+        <option >is empty</option>
+        <option >is not empty</option>
+        <option >is any of</option>
+      </select>
+    </div>
+
+    <div class="filter-group">
+      <label>Value</label>
+      <input type="text" placeholder="Filter value" />
+    </div>
+  </div>
+</div>
+
+
       <!-- DENSITY Button with dropdown -->
       <div class="toolbar-button" id="densityToggle">
         <i class="fas fa-align-justify"></i> DENSITY
@@ -488,6 +622,7 @@ thead th {
     <!-- Table -->
     
     <div class="table-wrapper">
+    
     <table>
       <thead>
         <tr>
@@ -636,6 +771,231 @@ document.querySelector(".hide-all").addEventListener("click", () => {
 document.querySelector(".show-all").addEventListener("click", () => {
   document.querySelectorAll("#columnDropdown input[type='checkbox']").forEach(cb => cb.checked = false);
 });
+
+
+
+
+
+  // Attach index and save original text for all toggles
+  document.querySelectorAll(".column-toggle").forEach((toggle, index) => {
+    const checkbox = toggle.querySelector("input[type='checkbox']");
+    checkbox.setAttribute("data-column", index);
+
+    // Save original content
+    cacheColumnContent(index);
+
+    // Set initial state
+    updateColumnContent(index, checkbox.checked);
+
+    checkbox.addEventListener("change", () => {
+      updateColumnContent(index, checkbox.checked);
+    });
+  });
+
+  // Cache original text content in data attributes
+  function cacheColumnContent(index) {
+    const table = document.querySelector("table");
+
+    // Header
+    const headerCell = table.querySelectorAll("thead th")[index];
+    if (headerCell && !headerCell.hasAttribute("data-original")) {
+      headerCell.setAttribute("data-original", headerCell.innerHTML);
+    }
+
+    // Body rows
+    const rows = table.querySelectorAll("tbody tr");
+    rows.forEach(row => {
+      const cell = row.cells[index];
+      if (cell && !cell.hasAttribute("data-original")) {
+        cell.setAttribute("data-original", cell.innerHTML);
+      }
+    });
+  }
+
+  // Hide or restore content without affecting layout
+  function updateColumnContent(index, show) {
+    const table = document.querySelector("table");
+
+    // Header
+    const headerCell = table.querySelectorAll("thead th")[index];
+    if (headerCell) {
+      headerCell.innerHTML = show ? headerCell.getAttribute("data-original") : "<span style='visibility:hidden'>" + headerCell.getAttribute("data-original") + "</span>";
+    }
+
+    // Body
+    const rows = table.querySelectorAll("tbody tr");
+    rows.forEach(row => {
+      const cell = row.cells[index];
+      if (cell) {
+        const content = cell.getAttribute("data-original");
+        cell.innerHTML = show ? content : "<span style='visibility:hidden'>" + content + "</span>";
+      }
+    });
+  }
+
+  // Hide All (keep structure, hide content)
+  document.querySelector(".hide-all").addEventListener("click", (e) => {
+    e.stopPropagation(); // Keep dropdown open
+    document.querySelectorAll("#columnDropdown input[type='checkbox']").forEach((cb, idx) => {
+      cb.checked = false;
+      updateColumnContent(idx, false);
+    });
+  });
+
+  // Show All (restore content)
+  document.querySelector(".show-all").addEventListener("click", (e) => {
+    e.stopPropagation(); // Keep dropdown open
+    document.querySelectorAll("#columnDropdown input[type='checkbox']").forEach((cb, idx) => {
+      cb.checked = true;
+      updateColumnContent(idx, true);
+    });
+  });
+  const columnData = {}; // Store removed column data once
+
+// Setup toggle listeners
+document.querySelectorAll(".column-toggle").forEach((toggle, index) => {
+  const checkbox = toggle.querySelector("input[type='checkbox']");
+  checkbox.setAttribute("data-column", index);
+
+  // Save original column content (once)
+  if (!columnData[index]) {
+    cacheColumn(index);
+  }
+
+  // Attach change event once
+  checkbox.addEventListener("change", () => {
+    if (checkbox.checked) {
+      restoreColumn(index); // Show column
+    } else {
+      removeColumn(index);  // Hide column
+    }
+  });
+});
+
+// Cache original column contents
+function cacheColumn(index) {
+  const table = document.querySelector("table");
+  const th = table.querySelectorAll("thead th")[index];
+  const tds = [];
+
+  if (th) {
+    columnData[index] = {
+      th: th.cloneNode(true),
+      tds: []
+    };
+
+    const rows = table.querySelectorAll("tbody tr");
+    rows.forEach((row, i) => {
+      const td = row.cells[index];
+      if (td) {
+        columnData[index].tds[i] = td.cloneNode(true);
+      }
+    });
+  }
+}
+
+// Remove column by index
+function removeColumn(index) {
+  const table = document.querySelector("table");
+
+  // Remove <th>
+  const ths = table.querySelectorAll("thead th");
+  if (ths[index]) {
+    ths[index].remove();
+  }
+
+  // Remove corresponding <td>
+  const rows = table.querySelectorAll("tbody tr");
+  rows.forEach(row => {
+    const cell = row.cells[index];
+    if (cell) {
+      cell.remove();
+    }
+  });
+}
+
+// Restore column (clean and re-insert)
+function restoreColumn(index) {
+  const table = document.querySelector("table");
+
+  // Check if already exists
+  const headerRow = table.querySelector("thead tr");
+  if (headerRow.children[index]?.textContent === columnData[index]?.th?.textContent) {
+    return; // Already restored
+  }
+
+  // Insert header <th>
+  if (columnData[index]?.th) {
+    insertAt(headerRow, columnData[index].th.cloneNode(true), index);
+  }
+
+  // Insert corresponding <td> for each row
+  const rows = table.querySelectorAll("tbody tr");
+  rows.forEach((row, i) => {
+    const td = columnData[index]?.tds[i];
+    if (td) {
+      insertAt(row, td.cloneNode(true), index);
+    }
+  });
+}
+
+// Insert node at correct index
+function insertAt(parent, element, index) {
+  const children = Array.from(parent.children);
+  if (index >= children.length) {
+    parent.appendChild(element);
+  } else {
+    parent.insertBefore(element, children[index]);
+  }
+}
+
+// Global click handler: hide dropdowns only if clicked outside
+document.addEventListener("click", (event) => {
+  const isColumnArea = columnToggle.contains(event.target) || columnDropdown.contains(event.target);
+  if (!isColumnArea) {
+    columnDropdown.style.display = "none";
+  }
+
+  const isDensityArea = densityToggle.contains(event.target) || densityDropdown.contains(event.target);
+  if (!isDensityArea) {
+    densityDropdown.style.display = "none";
+  }
+
+  const isExportArea = exportToggle.contains(event.target) || exportDropdown.contains(event.target);
+  if (!isExportArea) {
+    exportDropdown.style.display = "none";
+  }
+});
+
+// filter dropdown
+
+  // Toggle filter dropdown when clicking the FILTERS button
+  document.querySelector('.toolbar-button:nth-child(2)').addEventListener('click', function (e) {
+    document.getElementById('filterDropdown').classList.toggle('show');
+    e.stopPropagation(); // Prevent closing immediately
+  });
+
+  // Close filter dropdown when clicking outside
+  document.addEventListener('click', function () {
+    document.getElementById('filterDropdown').classList.remove('show');
+  });
+
+  // Prevent closing when clicking inside filter dropdown
+  document.getElementById('filterDropdown').addEventListener('click', function (e) {
+    e.stopPropagation();
+  });
+
+  // Close when clicking ✕
+  document.querySelector('.filter-remove').addEventListener('click', function () {
+    document.getElementById('filterDropdown').classList.remove('show');
+  });
+
+
+
+
+
+
+
 
   </script>
 </body>

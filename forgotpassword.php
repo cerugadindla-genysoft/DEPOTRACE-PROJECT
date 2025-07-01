@@ -1,6 +1,20 @@
 <?php
 session_start();
 
+// ✅ MySQL connection directly in this file
+$host = "localhost";
+$user = "root";
+$password = ""; // Change this to your actual DB password
+$database = "depotrace_logins"; // Replace with your DB name
+
+$conn = new mysqli($host, $user, $password, $database);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// ✅ Form submission logic
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = trim($_POST['email']);
 
@@ -10,19 +24,50 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION['emailError'] = "Please enter a valid email address";
     } elseif (!preg_match('/^[a-zA-Z]/', $email)) {
         $_SESSION['emailError'] = "Email must start with a letter";
-    } else {
-        // Handle reset logic here
-        header("Location: dashboard.php");
-        exit();
+      } else {
+        // ✅ Check if email exists in the table
+        $stmt = $conn->prepare("SELECT * FROM users WHERE email = ?");
+        if (!$stmt) {
+            die("Prepare failed: " . $conn->error);
+        }
+    
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
+    
+
+        if ($result->num_rows > 0) {
+            // ✅ Email found
+            $_SESSION['emailSuccess'] = "Email verified successfully";
+            header("Location: dashboard.php");
+            exit();
+        } else {
+            // ❌ Email not found
+            $_SESSION['emailError'] = "Invalid email. Please enter a registered email address.";
+        }
+
+        $stmt->close();
     }
 
-    // Redirect to avoid resubmission on reload
     header("Location: forgotpassword.php");
     exit();
 }
-
-  
 ?>
+<style>
+  input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0px 1000px white inset !important;
+  box-shadow: 0 0 0px 1000px white inset !important;
+  background-color: white !important;
+  color: black !important;
+  border: none !important;
+  outline: none !important;
+  transition: background-color 9999s ease-out, color 9999s ease-out !important;
+}
+
+</style>
 
 
 
