@@ -479,20 +479,21 @@ thead th {
   cursor: pointer;
   font-size: 14px;
   color: #333;
-  margin-top: 22px;
+  margin-top: 20px;
 }
 
 .filter-group {
   display: flex;
   flex-direction: column;
   flex: 1;
-  /* padding-right: 20px; */
+  /* margin-right: 12px; */
 }
 
 .filter-group label {
   font-size: 12px;
   color: #666;
   margin-bottom: 4px;
+  margin-left: 12px;
 }
 
 .filter-group select,
@@ -990,6 +991,77 @@ document.addEventListener("click", (event) => {
     document.getElementById('filterDropdown').classList.remove('show');
   });
 
+
+  //  filters functionality
+  
+document.addEventListener("DOMContentLoaded", function () {
+  const filterToggle = document.getElementById("filterToggle");
+  const filterDropdown = document.getElementById("filterDropdown");
+  const closeFilter = document.getElementById("closeFilter");
+
+  const columnSelect = document.getElementById("filterColumn");
+  const operatorSelect = document.getElementById("filterOperator");
+  const valueInput = document.getElementById("filterValue");
+
+  // Show/Hide filter dropdown
+  filterToggle.addEventListener("click", () => {
+    filterDropdown.style.display = filterDropdown.style.display === "none" ? "block" : "none";
+  });
+
+  // Close filter dropdown
+  closeFilter.addEventListener("click", () => {
+    filterDropdown.style.display = "none";
+  });
+
+  // Apply filtering on value change (Enter key or blur)
+  valueInput.addEventListener("keypress", function (e) {
+    if (e.key === "Enter") {
+      applyFilter();
+    }
+  });
+
+  function applyFilter() {
+    const columnIndex = parseInt(columnSelect.value);
+    const operator = operatorSelect.value;
+    const filterText = valueInput.value.trim().toLowerCase();
+
+    const rows = document.querySelectorAll("table tbody tr");
+
+    rows.forEach(row => {
+      const cell = row.cells[columnIndex];
+      const cellText = cell.textContent.trim().toLowerCase();
+
+      let show = false;
+
+      switch (operator) {
+        case "contains":
+          show = cellText.includes(filterText);
+          break;
+        case "equals":
+          show = cellText === filterText;
+          break;
+        case "starts":
+          show = cellText.startsWith(filterText);
+          break;
+        case "ends":
+          show = cellText.endsWith(filterText);
+          break;
+        case "empty":
+          show = cellText === "";
+          break;
+        case "notempty":
+          show = cellText !== "";
+          break;
+        case "any":
+          const options = filterText.split(",").map(s => s.trim());
+          show = options.includes(cellText);
+          break;
+      }
+
+      row.style.display = show ? "" : "none";
+    });
+  }
+});
 
 
 
