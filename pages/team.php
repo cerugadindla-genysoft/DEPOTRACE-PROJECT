@@ -1,6 +1,8 @@
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
   <link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet" />
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> -->
+
   <style>
     body {
       font-family: 'Poppins', sans-serif;
@@ -510,7 +512,198 @@ thead th {
 .filter-dropdown.show {
   display: block;
 }
+.toolbar-button {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+/* Optional: hide dropdown initially */
+.density-dropdown {
+  display: none;
+  position: absolute;
+  background: white;
+  border: 1px solid #ccc;
+  z-index: 1000;
+}
 
+/* Show on active */
+.toolbar-button.active .density-dropdown {
+  display: block;
+}
+
+/* Density classes for table rows */
+.table-row.compact td {
+  padding: 4px 6px;
+}
+.table-row.standard td {
+  padding: 8px 12px;
+}
+.table-row.comfortable td {
+  padding: 14px 20px;
+}
+.header-cell {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  padding: 6px 8px;
+  cursor: pointer;
+}
+
+.header-icons {
+  opacity: 0;
+  display: flex;
+  gap: 12px;
+  transition: opacity 0.2s ease;
+  font-size: 14px;
+  color: #aaa;
+}
+
+.header-cell.active .header-icons {
+  opacity: 1;
+}
+
+.header-cell span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 110px;
+  color: #0099ff;
+}
+
+
+
+
+
+
+/*  */
+.header-cell {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 8px;
+  position: relative;
+  cursor: pointer;
+}
+
+.header-icons {
+  display: flex;
+  gap: 12px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease;
+}
+
+.header-cell:hover .header-icons {
+  opacity: 1;
+  visibility: visible;
+}
+
+.header-icons i {
+  font-size: 14px;
+  color: #aaa;
+  cursor: pointer;
+}
+
+.icon-wrapper {
+  position: relative;
+}
+
+.menu-icon .dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 110%;
+  right: 0;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  border-radius: 8px;
+  min-width: 160px;
+  z-index: 999;
+  padding: 6px 0;
+  font-size: 14px;
+}
+
+.dropdown-item {
+  padding: 8px 16px;
+  cursor: pointer;
+  color: #333;
+  white-space: nowrap;
+}
+
+.dropdown-item:hover {
+  background-color: #f5f5f5;
+}
+
+.dropdown-item.disabled {
+  color: #bbb;
+  cursor: default;
+  background-color: transparent;
+}
+
+
+.header-cell {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 8px;
+  position: relative;
+}
+
+.header-icons {
+  display: flex;
+  gap: 12px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease;
+}
+
+.header-cell:hover .header-icons {
+  opacity: 1;
+  visibility: visible;
+}
+
+.header-icons i {
+  font-size: 14px;
+  color: #aaa;
+  cursor: pointer;
+}
+
+.icon-wrapper {
+  position: relative;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 120%;
+  right: 0;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  border-radius: 8px;
+  min-width: 160px;
+  z-index: 999;
+  padding: 6px 0;
+  font-size: 14px;
+}
+
+.dropdown-item {
+  padding: 8px 16px;
+  cursor: pointer;
+  color: #333;
+  white-space: nowrap;
+}
+
+.dropdown-item:hover {
+  background-color: #f5f5f5;
+}
+
+.dropdown-item.disabled {
+  color: #bbb;
+  cursor: default;
+  background-color: transparent;
+}
 
   </style>
 </head>
@@ -550,63 +743,73 @@ thead th {
     </div>
   </div>
 </div>
-      <div class="toolbar-button"><i class="fas fa-filter"></i> FILTERS</div>
+<div class="toolbar-button" id="filterToggle">
+  <i class="fas fa-filter"></i> FILTERS
+</div>
 
-      <!-- Filter dropdown -->
-<div class="filter-dropdown" id="filterDropdown">
+<!-- Filter dropdown -->
+<div class="filter-dropdown" id="filterDropdown" style="display: none;">
   <div class="filter-row">
-    <span class="filter-remove">✕</span>
+    <span class="filter-remove" id="closeFilter">✕</span>
+
     <div class="filter-group">
       <label>Columns</label>
-      <select>
-      <option>First Name</option>
-      <option>Last Name</option>
-      <option>User Name</option>
-      <option>Password</option>
-      <option>Organization</option>
-      <option>Role</option>
-      <option>Status</option>
-      <option>Occupation</option>
-      <option>Email</option>
-      <option>Phone Number</option>
-      <option>City</option>
-      <option>State</option>
-      <option>Country</option>
-
-      
+      <select id="filterColumn">
+        <option value="0">First Name</option>
+        <option value="1">Last Name</option>
+        <option value="2">User Name</option>
+        <option value="3">Password</option>
+        <option value="4">Organization</option>
+        <option value="5">Role</option>
+        <option value="6">Status</option>
+        <option value="7">Occupation</option>
+        <option value="8">Email</option>
+        <option value="9">Phone Number</option>
+        <option value="10">City</option>
+        <option value="11">State</option>
+        <option value="12">Country</option>
       </select>
     </div>
 
     <div class="filter-group">
       <label>Operator</label>
-      <select>
-        <option>contains</option>
-        <option>equals</option>
-        <option>starts with</option>
-        <option>ends with</option>
-        <option >is empty</option>
-        <option >is not empty</option>
-        <option >is any of</option>
+      <select id="filterOperator">
+        <option value="contains">contains</option>
+        <option value="equals">equals</option>
+        <option value="starts">starts with</option>
+        <option value="ends">ends with</option>
+        <option value="empty">is empty</option>
+        <option value="notempty">is not empty</option>
+        <option value="any">is any of</option>
       </select>
     </div>
 
     <div class="filter-group">
       <label>Value</label>
-      <input type="text" placeholder="Filter value" />
+      <input type="text" id="filterValue" placeholder="Filter value" />
     </div>
   </div>
 </div>
 
-
       <!-- DENSITY Button with dropdown -->
-      <div class="toolbar-button" id="densityToggle">
+      <!-- <div class="toolbar-button" id="densityToggle">
         <i class="fas fa-align-justify"></i> DENSITY
         <div class="density-dropdown" id="densityDropdown">
           <div class="dropdown-item"><i class="fas fa-bars"></i> Compact</div>
           <div class="dropdown-item"><i class="fas fa-bars-staggered"></i> Standard</div>
           <div class="dropdown-item"><i class="fas fa-bars-progress"></i> Comfortable</div>
         </div>
-      </div>
+      </div> -->
+
+      <div class="toolbar-button" id="densityToggle">
+  <i class="fas fa-align-justify"></i> DENSITY
+  <div class="density-dropdown" id="densityDropdown">
+    <div class="dropdown-item" data-density="compact"><i class="fas fa-bars"></i> Compact</div>
+    <div class="dropdown-item" data-density="standard"><i class="fas fa-bars-staggered"></i> Standard</div>
+    <div class="dropdown-item" data-density="comfortable"><i class="fas fa-bars-progress"></i> Comfortable</div>
+  </div>
+</div>
+
 
        <!-- <div class="toolbar-button"><i class="fas fa-download"></i> EXPORT</div>  -->
     <!-- </div>  -->
@@ -615,7 +818,7 @@ thead th {
   <i class="fas fa-download"></i> EXPORT
 
   <div class="export-dropdown" id="exportDropdown">
-    <div class="dropdown-item"> Download as CSV</div>
+    <div class="dropdown-item" id="downloadCSV"> Download as CSV</div>
   </div>
 </div>
 </div>
@@ -623,25 +826,272 @@ thead th {
     <!-- Table -->
     
     <div class="table-wrapper">
-    
-    <table>
-      <thead>
-        <tr>
-          <th>First Name</th>
-          <th>Last Name</th>
-          <th>User Name</th>
-          <th>Password</th>
-          <th>Organization</th>
-          <th>Role</th>
-          <th>Status</th>
-          <th>Occupation</th>
-          <th>Email</th>
-          <th>Phone Number</th>
-          <th>City</th>
-          <th>State</th>
-          <th>Country</th>
-        </tr>
-      </thead>
+  <table>
+    <thead>
+      <tr>
+      <th>
+          <div class="header-cell">
+            <span>First Name</span>
+            <div class="header-icons">
+              <div class="icon-wrapper"><i class="fas fa-arrow-up"></i></div>
+              <div class="icon-wrapper menu-icon">
+                <i class="fas fa-ellipsis-v"></i>
+                <div class="dropdown-menu">
+                  <div class="dropdown-item disabled">Unsort</div>
+                  <div class="dropdown-item">Sort by ASC</div>
+                  <div class="dropdown-item">Sort by DESC</div>
+                  <div class="dropdown-item">Filter</div>
+                  <div class="dropdown-item">Hide</div>
+                  <div class="dropdown-item">Show columns</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </th>
+
+        <!-- Repeat this structure for each column -->
+        <th>
+          <div class="header-cell">
+            <span>Last Name</span>
+            <div class="header-icons">
+              <div class="icon-wrapper"><i class="fas fa-arrow-up"></i></div>
+              <div class="icon-wrapper menu-icon">
+                <i class="fas fa-ellipsis-v"></i>
+                <div class="dropdown-menu">
+                  <div class="dropdown-item disabled">Unsort</div>
+                  <div class="dropdown-item">Sort by ASC</div>
+                  <div class="dropdown-item">Sort by DESC</div>
+                  <div class="dropdown-item">Filter</div>
+                  <div class="dropdown-item">Hide</div>
+                  <div class="dropdown-item">Show columns</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </th>
+
+        <th>
+          <div class="header-cell">
+            <span>User Name</span>
+            <div class="header-icons">
+              <div class="icon-wrapper"><i class="fas fa-arrow-up"></i></div>
+              <div class="icon-wrapper menu-icon">
+                <i class="fas fa-ellipsis-v"></i>
+                <div class="dropdown-menu">
+                  <div class="dropdown-item disabled">Unsort</div>
+                  <div class="dropdown-item">Sort by ASC</div>
+                  <div class="dropdown-item">Sort by DESC</div>
+                  <div class="dropdown-item">Filter</div>
+                  <div class="dropdown-item">Hide</div>
+                  <div class="dropdown-item">Show columns</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </th>
+
+        <th>
+          <div class="header-cell">
+            <span>Password</span>
+            <div class="header-icons">
+              <div class="icon-wrapper"><i class="fas fa-arrow-up"></i></div>
+              <div class="icon-wrapper menu-icon">
+                <i class="fas fa-ellipsis-v"></i>
+                <div class="dropdown-menu">
+                  <div class="dropdown-item disabled">Unsort</div>
+                  <div class="dropdown-item">Sort by ASC</div>
+                  <div class="dropdown-item">Sort by DESC</div>
+                  <div class="dropdown-item">Filter</div>
+                  <div class="dropdown-item">Hide</div>
+                  <div class="dropdown-item">Show columns</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </th>
+
+        <th>
+          <div class="header-cell">
+            <span>Organization</span>
+            <div class="header-icons">
+              <div class="icon-wrapper"><i class="fas fa-arrow-up"></i></div>
+              <div class="icon-wrapper menu-icon">
+                <i class="fas fa-ellipsis-v"></i>
+                <div class="dropdown-menu">
+                  <div class="dropdown-item disabled">Unsort</div>
+                  <div class="dropdown-item">Sort by ASC</div>
+                  <div class="dropdown-item">Sort by DESC</div>
+                  <div class="dropdown-item">Filter</div>
+                  <div class="dropdown-item">Hide</div>
+                  <div class="dropdown-item">Show columns</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </th>
+
+        <th>
+          <div class="header-cell">
+            <span>Role</span>
+            <div class="header-icons">
+              <div class="icon-wrapper"><i class="fas fa-arrow-up"></i></div>
+              <div class="icon-wrapper menu-icon">
+                <i class="fas fa-ellipsis-v"></i>
+                <div class="dropdown-menu">
+                  <div class="dropdown-item disabled">Unsort</div>
+                  <div class="dropdown-item">Sort by ASC</div>
+                  <div class="dropdown-item">Sort by DESC</div>
+                  <div class="dropdown-item">Filter</div>
+                  <div class="dropdown-item">Hide</div>
+                  <div class="dropdown-item">Show columns</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </th>
+        <th>
+          <div class="header-cell">
+            <span>Status</span>
+            <div class="header-icons">
+              <div class="icon-wrapper"><i class="fas fa-arrow-up"></i></div>
+              <div class="icon-wrapper menu-icon">
+                <i class="fas fa-ellipsis-v"></i>
+                <div class="dropdown-menu">
+                  <div class="dropdown-item disabled">Unsort</div>
+                  <div class="dropdown-item">Sort by ASC</div>
+                  <div class="dropdown-item">Sort by DESC</div>
+                  <div class="dropdown-item">Filter</div>
+                  <div class="dropdown-item">Hide</div>
+                  <div class="dropdown-item">Show columns</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </th>
+
+        <th>
+          <div class="header-cell">
+            <span>Occupation</span>
+            <div class="header-icons">
+              <div class="icon-wrapper"><i class="fas fa-arrow-up"></i></div>
+              <div class="icon-wrapper menu-icon">
+                <i class="fas fa-ellipsis-v"></i>
+                <div class="dropdown-menu">
+                  <div class="dropdown-item disabled">Unsort</div>
+                  <div class="dropdown-item">Sort by ASC</div>
+                  <div class="dropdown-item">Sort by DESC</div>
+                  <div class="dropdown-item">Filter</div>
+                  <div class="dropdown-item">Hide</div>
+                  <div class="dropdown-item">Show columns</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </th>
+
+        <th>
+          <div class="header-cell">
+            <span>Email</span>
+            <div class="header-icons">
+              <div class="icon-wrapper"><i class="fas fa-arrow-up"></i></div>
+              <div class="icon-wrapper menu-icon">
+                <i class="fas fa-ellipsis-v"></i>
+                <div class="dropdown-menu">
+                  <div class="dropdown-item disabled">Unsort</div>
+                  <div class="dropdown-item">Sort by ASC</div>
+                  <div class="dropdown-item">Sort by DESC</div>
+                  <div class="dropdown-item">Filter</div>
+                  <div class="dropdown-item">Hide</div>
+                  <div class="dropdown-item">Show columns</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </th>
+
+        <th>
+          <div class="header-cell">
+            <span>Phone Number</span>
+            <div class="header-icons">
+              <div class="icon-wrapper"><i class="fas fa-arrow-up"></i></div>
+              <div class="icon-wrapper menu-icon">
+                <i class="fas fa-ellipsis-v"></i>
+                <div class="dropdown-menu">
+                  <div class="dropdown-item disabled">Unsort</div>
+                  <div class="dropdown-item">Sort by ASC</div>
+                  <div class="dropdown-item">Sort by DESC</div>
+                  <div class="dropdown-item">Filter</div>
+                  <div class="dropdown-item">Hide</div>
+                  <div class="dropdown-item">Show columns</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </th>
+
+        <th>
+          <div class="header-cell">
+            <span>City</span>
+            <div class="header-icons">
+              <div class="icon-wrapper"><i class="fas fa-arrow-up"></i></div>
+              <div class="icon-wrapper menu-icon">
+                <i class="fas fa-ellipsis-v"></i>
+                <div class="dropdown-menu">
+                  <div class="dropdown-item disabled">Unsort</div>
+                  <div class="dropdown-item">Sort by ASC</div>
+                  <div class="dropdown-item">Sort by DESC</div>
+                  <div class="dropdown-item">Filter</div>
+                  <div class="dropdown-item">Hide</div>
+                  <div class="dropdown-item">Show columns</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </th>
+
+        <th>
+          <div class="header-cell">
+            <span>State</span>
+            <div class="header-icons">
+              <div class="icon-wrapper"><i class="fas fa-arrow-up"></i></div>
+              <div class="icon-wrapper menu-icon">
+                <i class="fas fa-ellipsis-v"></i>
+                <div class="dropdown-menu">
+                  <div class="dropdown-item disabled">Unsort</div>
+                  <div class="dropdown-item">Sort by ASC</div>
+                  <div class="dropdown-item">Sort by DESC</div>
+                  <div class="dropdown-item">Filter</div>
+                  <div class="dropdown-item">Hide</div>
+                  <div class="dropdown-item">Show columns</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </th>
+
+        <th>
+          <div class="header-cell">
+            <span>Country</span>
+            <div class="header-icons">
+              <div class="icon-wrapper"><i class="fas fa-arrow-up"></i></div>
+              <div class="icon-wrapper menu-icon">
+                <i class="fas fa-ellipsis-v"></i>
+                <div class="dropdown-menu">
+                  <div class="dropdown-item disabled">Unsort</div>
+                  <div class="dropdown-item">Sort by ASC</div>
+                  <div class="dropdown-item">Sort by DESC</div>
+                  <div class="dropdown-item">Filter</div>
+                  <div class="dropdown-item">Hide</div>
+                  <div class="dropdown-item">Show columns</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </th>
+      </tr>
+    </thead>
+
+
       <tbody>
         <!-- No data; only layout -->
         <?php
@@ -652,7 +1102,7 @@ thead th {
 
   if ($result && $result->num_rows > 0) {
       while ($row = $result->fetch_assoc()) {
-          echo "<tr>
+          echo "<tr class='table-row standard'>
               <td>" . htmlspecialchars($row['firstname']) . "</td>
               <td>" . htmlspecialchars($row['lastname']) . "</td>
               <td>" . htmlspecialchars($row['username']) . "</td>
@@ -994,7 +1444,8 @@ document.addEventListener("click", (event) => {
 
   //  filters functionality
   
-document.addEventListener("DOMContentLoaded", function () {
+ 
+  document.addEventListener("DOMContentLoaded", function () {
   const filterToggle = document.getElementById("filterToggle");
   const filterDropdown = document.getElementById("filterDropdown");
   const closeFilter = document.getElementById("closeFilter");
@@ -1003,70 +1454,202 @@ document.addEventListener("DOMContentLoaded", function () {
   const operatorSelect = document.getElementById("filterOperator");
   const valueInput = document.getElementById("filterValue");
 
-  // Show/Hide filter dropdown
-  filterToggle.addEventListener("click", () => {
+  // Show/Hide the filter dropdown
+  filterToggle.addEventListener("click", (e) => {
+    e.stopPropagation(); // prevent bubbling
     filterDropdown.style.display = filterDropdown.style.display === "none" ? "block" : "none";
   });
 
-  // Close filter dropdown
-  closeFilter.addEventListener("click", () => {
+  // Close the filter
+  closeFilter.addEventListener("click", (e) => {
+    e.stopPropagation();
     filterDropdown.style.display = "none";
   });
 
-  // Apply filtering on value change (Enter key or blur)
-  valueInput.addEventListener("keypress", function (e) {
-    if (e.key === "Enter") {
-      applyFilter();
-    }
-  });
+  // Trigger filter on any change or click
+  columnSelect.addEventListener("change", applyFilter);
+  operatorSelect.addEventListener("change", applyFilter);
+  valueInput.addEventListener("change", applyFilter); // when a value is clicked or entered
 
   function applyFilter() {
-    const columnIndex = parseInt(columnSelect.value);
+    const colIndex = parseInt(columnSelect.value);
     const operator = operatorSelect.value;
-    const filterText = valueInput.value.trim().toLowerCase();
+    const inputValue = valueInput.value.trim().toLowerCase();
 
     const rows = document.querySelectorAll("table tbody tr");
 
     rows.forEach(row => {
-      const cell = row.cells[columnIndex];
-      const cellText = cell.textContent.trim().toLowerCase();
+      const cell = row.cells[colIndex];
+      if (!cell) return;
 
-      let show = false;
+      const cellValue = cell.textContent.trim().toLowerCase();
+      let matched = false;
 
       switch (operator) {
         case "contains":
-          show = cellText.includes(filterText);
+          matched = cellValue.includes(inputValue);
           break;
         case "equals":
-          show = cellText === filterText;
+          matched = cellValue === inputValue;
           break;
         case "starts":
-          show = cellText.startsWith(filterText);
+          matched = cellValue.startsWith(inputValue);
           break;
         case "ends":
-          show = cellText.endsWith(filterText);
+          matched = cellValue.endsWith(inputValue);
           break;
         case "empty":
-          show = cellText === "";
+          matched = cellValue === "";
           break;
         case "notempty":
-          show = cellText !== "";
+          matched = cellValue !== "";
           break;
         case "any":
-          const options = filterText.split(",").map(s => s.trim());
-          show = options.includes(cellText);
+          const list = inputValue.split(",").map(s => s.trim());
+          matched = list.includes(cellValue);
           break;
       }
 
-      row.style.display = show ? "" : "none";
+      row.style.display = matched ? "" : "none";
     });
   }
+
+  // ✅ Close dropdown when clicking outside
+  document.addEventListener("click", function (event) {
+    const isClickInsideDropdown = filterDropdown.contains(event.target);
+    const isClickOnToggle = filterToggle.contains(event.target);
+
+    if (!isClickInsideDropdown && !isClickOnToggle) {
+      filterDropdown.style.display = "none";
+    }
+  });
 });
 
 
+// export functionality
+
+document.getElementById("downloadCSV").addEventListener("click", function () {
+  const table = document.getElementById("userTable");
+  let csv = [];
+  
+  // Get headers
+  const headers = table.querySelectorAll("thead th");
+  let headerRow = [];
+  headers.forEach(th => {
+    headerRow.push('"' + th.textContent.trim().replace(/"/g, '""') + '"');
+  });
+  csv.push(headerRow.join(","));
+
+  // Get rows
+  const rows = table.querySelectorAll("tbody tr");
+  rows.forEach(row => {
+    let rowData = [];
+    row.querySelectorAll("td").forEach(td => {
+      rowData.push('"' + td.textContent.trim().replace(/"/g, '""') + '"');
+    });
+    csv.push(rowData.join(","));
+  });
+
+  // Create and download CSV file
+  const csvContent = csv.join("\n");
+  const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.setAttribute("href", url);
+  link.setAttribute("download", "users.csv");
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+});
 
 
+// density functionality
+document.addEventListener("DOMContentLoaded", function () {
+  const densityToggle = document.getElementById("densityToggle");
+  const densityDropdown = document.getElementById("densityDropdown");
 
+  // Show/hide dropdown
+  densityToggle.addEventListener("click", function (event) {
+    event.stopPropagation();
+    densityToggle.classList.toggle("active");
+  });
+
+  // Dropdown item click
+  densityDropdown.querySelectorAll(".dropdown-item").forEach(item => {
+    item.addEventListener("click", function () {
+      const selectedDensity = item.getAttribute("data-density");
+
+      // Apply to all table rows
+      document.querySelectorAll(".table-row").forEach(row => {
+        row.classList.remove("compact", "standard", "comfortable");
+        row.classList.add(selectedDensity);
+      });
+
+      // Hide dropdown
+      densityToggle.classList.remove("active");
+    });
+  });
+
+  // Close dropdown on outside click
+  document.addEventListener("click", function (event) {
+    if (!densityToggle.contains(event.target)) {
+      densityToggle.classList.remove("active");
+    }
+  });
+});
+
+
+// columns functionality
+
+  document.querySelectorAll('.header-cell').forEach(cell => {
+    cell.addEventListener('click', function (e) {
+      // Remove active from all headers
+      document.querySelectorAll('.header-cell').forEach(c => c.classList.remove('active'));
+
+      // Set active to the clicked one
+      this.classList.add('active');
+
+      // Prevent table sorting or bubbling
+      e.stopPropagation();
+    });
+  });
+
+  // Optional: Remove active class when clicking outside
+  document.addEventListener('click', function (e) {
+    if (!e.target.closest('.header-cell')) {
+      document.querySelectorAll('.header-cell').forEach(c => c.classList.remove('active'));
+    }
+  });
+
+//  columns functionnality
+
+document.addEventListener("DOMContentLoaded", function () {
+    const allMenus = document.querySelectorAll(".menu-icon");
+
+    allMenus.forEach(menuIcon => {
+      const triggerIcon = menuIcon.querySelector("i.fas.fa-ellipsis-v");
+      const dropdown = menuIcon.querySelector(".dropdown-menu");
+
+      triggerIcon.addEventListener("click", function (e) {
+        e.stopPropagation();
+
+        // Hide other open menus
+        document.querySelectorAll(".dropdown-menu").forEach(menu => {
+          if (menu !== dropdown) menu.style.display = "none";
+        });
+
+        // Toggle current
+        dropdown.style.display = (dropdown.style.display === "block") ? "none" : "block";
+      });
+    });
+
+    // Click outside to close all
+    document.addEventListener("click", () => {
+      document.querySelectorAll(".dropdown-menu").forEach(menu => {
+        menu.style.display = "none";
+      });
+    });
+  });
 
 
   </script>
