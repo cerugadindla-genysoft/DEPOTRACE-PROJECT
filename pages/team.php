@@ -2,6 +2,8 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
   <link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet" />
   <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
 
   <style>
     body {
@@ -34,7 +36,7 @@ body.dark-mode .theme-icon i {
 body.dark-mode #themeToggle i {
   color: #fff !important;
 }
-    .team-header h2 {
+    .team-header h3{
       color: #33B0F7;
       font-weight: 900;
       font-size: 20px;
@@ -704,13 +706,418 @@ thead th {
   cursor: default;
   background-color: transparent;
 }
+.table-wrapper {
+  max-height: 80vh;     /* Adjust as needed */
+  overflow: auto;       /* Enables scrollbars */
+  position: relative;   /* Needed for dropdown positioning */
+}
+table, th, td {
+  overflow: visible !important;
+  position: relative;   /* Allow dropdown positioning relative to th */
+}
+
+/* table {
+  overflow: visible !important;
+}
+
+th {
+  overflow: visible !important;
+  position: relative;
+} */
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: calc(100% + 6px); /* Below the icon */
+  right: 0;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  border-radius: 8px;
+  min-width: 160px;
+  z-index: 9999; /* Ensure it's on top */
+  padding: 6px 0;
+  font-size: 14px;
+  white-space: nowrap;
+}
+.dropdown-menu {
+  top: calc(100% + 8px);
+  right: -4px; /* Adjust as needed to align better */
+}
+/* .table-wrapper {
+  position: relative;
+  overflow: visible;
+}
+
+table, th {
+  overflow: visible;
+} */
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: calc(100% + 6px); /* Below the icon */
+  left: auto;
+  right: 0px; /* Align to the right edge of the icon */
+  background-color: #fff;
+  border: 1px solid #ccc;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  border-radius: 8px;
+  min-width: 90px!important;
+  z-index: 9999;
+  padding: 6px 0;
+  font-size: 3.7143px;
+  padding: 8px,0px;
+  font-family: poppins,sans-serif;
+  font-weight: 400;
+  line-height: 1.2;
+  align-items: center;
+}
+.dropdown-item.active {
+  color: #aaa; /* light background */
+  font-weight: 400;
+}
+/* .icon-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 8px;
+  height: 18px;
+  border-radius: 50%;
+  transition: background-color 0.2s;
+  cursor: pointer;
+}
+
+.icon-wrapper:hover {
+  background-color: #e0e0e0; /* Light grey hover */
+  html, body {
+  height: 100%;
+  overflow: auto;
+}
+body, html, * {
+  user-select: none !important;
+  caret-color: transparent !important;
+}
+input, textarea {
+  user-select: text !important;
+  caret-color: auto !important;
+}
+/* darkmode functionality */
+body.dark-mode {
+  background-color: #12172C;
+  color: #e0e0e0;
+}
+
+/* Header */
+body.dark-mode .team-header h2 {
+  color: #FFF6E0;
+}
+body.dark-mode .team-header p {
+  color: #FFE3A3;
+}
+
+/* Container */
+body.dark-mode .team-container {
+  border-color: #21295c;
+  background-color: #21295c;
+}
+
+/* Toolbar */
+body.dark-mode .team-toolbar {
+  background-color: #191f45;
+  color: #33B0F7;
+}
+body.dark-mode .team-toolbar .toolbar-button {
+  color: #33B0F7;
+}
+body.dark-mode .toolbar-button i {
+  color: #33B0F7;
+}
+
+/* Table */
+body.dark-mode table thead {
+  background-color: #191f45;
+}
+body.dark-mode th {
+  color: #33B0F7;
+}
+body.dark-mode td {
+  color: #e0e0e0;
+}
+body.dark-mode table tbody tr {
+  background-color: #1a1d2e;
+}
+body.dark-mode tbody tr:hover {
+  background-color: #2c2f45;
+}
+
+/* Role badge */
+body.dark-mode .role-badge {
+  background-color: #33B0F7;
+  color: white;
+}
+
+/* Status column */
+body.dark-mode .col-status span {
+  color: green !important;
+}
+
+/* Preserve other spans (like name, email) as white */
+body.dark-mode td span:not(.col-status span) {
+  color: white !important;
+}
+
+/* Dropdowns */
+body.dark-mode .dropdown-menu,
+body.dark-mode .column-dropdown,
+body.dark-mode .filter-dropdown,
+body.dark-mode .density-dropdown {
+  background-color: #121212;
+  color: #f2f2f2;
+  /* border-color: #444; */
+}
+body.dark-mode .dropdown-item {
+  color: #f2f2f2;
+}
+body.dark-mode .dropdown-item:hover {
+  background-color: #333;
+}
+
+/* Column list labels inside dropdown */
+body.dark-mode .column-list label {
+  color: #ddd;
+}
+
+/* Pagination select */
+body.dark-mode .pagination {
+  background-color: #191f45;
+  color: #f2f2f2;
+}
+body.dark-mode .pagination select {
+  background: transparent;
+  color: #f2f2f2;
+}
+/* Pagination in dark mode */
+body.dark-mode .pagination {
+  background-color: #191f45;
+  color: #f2f2f2;
+  border-top: 1px solid #2f3454;
+}
+
+body.dark-mode .pagination select {
+  background-color: #191f45;
+  color: #f2f2f2;
+  border: none;
+}
+
+body.dark-mode .pagination .nav-buttons i {
+  color: #f2f2f2;
+}
+/* Hover effect for dropdown select */
+body.dark-mode .pagination select:hover {
+  background-color: #1e1e1e;
+  border-radius: 4px;
+}
+
+/* Fix for table header not applying dark mode */
+/* Dark mode table header fix */
+body.dark-mode .table-wrapper thead {
+  background-color: #191f45 !important;
+}
+
+body.dark-mode .table-wrapper thead tr {
+  background-color: #191f45 !important;
+}
+
+body.dark-mode .table-wrapper thead th {
+  background-color: #191f45 !important;
+  color: #FFF6E0 !important;
+  border-bottom: 1px solid #2c2f45;
+}
+
+body.dark-mode .table-wrapper .header-cell {
+  background-color: transparent !important;
+}
+
+body.dark-mode .table-wrapper .header-cell span {
+  color: #FFF6E0 !important;
+}
+
+body.dark-mode .table-wrapper .icon-wrapper i {
+  color: #FFF6E0 !important;
+
+}
+/* Remove top white border line above the table */
+body.dark-mode .team-toolbar {
+  border-bottom: none !important;
+}
+
+/* Match thead and headers with #12172C background */
+body.dark-mode .table-wrapper,
+body.dark-mode .table-wrapper thead,
+body.dark-mode .table-wrapper thead tr,
+body.dark-mode .table-wrapper thead th {
+  background-color:  #191f45 !important;
+  border: none !important;
+}
+body.dark-mode .team-toolbar {
+  background-color: #12172C !important;
+  border-bottom: none !important;
+  border: 1px solid rgba(81, 81, 81, 1);
+}
+body.dark-mode table tbody tr {
+  border-bottom: 1px solid #aaa !important;
+}
+
+body.dark-mode table tbody tr {
+  border-bottom:1px solid rgba(81, 81, 81, 1);
+}
+
+/* 1. Outer table border */
+body.dark-mode table {
+  /* border: 1px solid rgba(81, 81, 81, 1); */
+  border-collapse: collapse; /* ensures borders don’t double */
+}
+/* 2. Optional: Keep only bottom border for rows (soft grey) */
+body.dark-mode table tbody tr {
+  border-bottom: 1px solid rgba(81, 81, 81, 1);
+}
+/* Remove ALL default borders from table cells */
+body.dark-mode table,
+body.dark-mode table * {
+  border: none !important;
+  border-color: transparent !important;
+}
+
+/* Add soft grey bottom line only for each row */
+body.dark-mode table tbody tr {
+  border-bottom: 1px solid #2c2f45 !important;
+}
+
+/* Optional: Soft outer border for entire table */
+body.dark-mode table {
+  border: 1px solid #2c2f45 !important;
+  border-collapse: collapse;
+}
+/* Export dropdown menu container */
+body.dark-mode .export-dropdown {
+  background-color: #121212 !important;
+  color: #f2f2f2 !important;
+  border: 1px solid #2c2f45 !important;
+}
+
+/* Export dropdown menu items */
+body.dark-mode .export-dropdown .dropdown-item {
+  color: #f2f2f2 !important;
+}
+
+/* Hover effect for export dropdown items */
+body.dark-mode .export-dropdown .dropdown-item:hover {
+  background-color: #333 !important;
+}
+body.dark-mode .density-icon {
+  color: #ccc !important;
+}
+
+
+
+/* Ensure options have dark background and white text */
+body.dark-mode select option {
+  background-color: #1e1e1e;
+  color: #ffffff;
+}
+
+/* Filter dropdown section: labels and values */
+body.dark-mode .filter-dropdown,
+body.dark-mode .filter-row {
+  color: #ffffff;
+  background-color: #1e1e1e;
+  border-color: #444;
+}
+/* Density dropdown background and text */
+body.dark-mode .density-dropdown {
+  background-color: #1e1e1e;
+  color: #ffffff;
+  border: 1px solid #444;
+}
+
+/* Icons inside density dropdown */
+body.dark-mode .density-dropdown i {
+  color: #ffffff;
+}
+
+/* Optional: Highlight selected option */
+body.dark-mode .density-dropdown .selected {
+  background-color:#1e1e1e;
+  color: #ffffff;
+}
+body.dark-mode .density-dropdown .dropdown-item:hover {
+  background-color: #333;
+}
+/* Make placeholder text white too */
+body.dark-mode .filter-dropdown input::placeholder {
+  color: #ffffff !important;
+}
+body.dark-mode .filter-dropdown label,
+body.dark-mode .filter-dropdown input,
+body.dark-mode .filter-dropdown select {
+  color: #ffffff !important;
+}
+body.dark-mode .filter-dropdown button,
+body.dark-mode .filter-dropdown span {
+  color: #ffffff !important;
+}
+
+.material-icons {
+  vertical-align: middle;
+  /* font-size: 28px; */
+  margin-right: 0px;
+  color: #2196f3; /* Matches the blue in the image */
+}
+.search-wrapper {
+  position: relative;
+  margin: 10px 0;
+}
+
+.column-search {
+  width: 100%;
+  padding: 10px 5px 5px 0;
+  border: none;
+  border-bottom: 1px solid #ccc;
+  background: transparent;
+  color: white;
+  font-size: 16px;
+}
+
+.column-search:focus {
+  outline: none;
+  border-color: #33b0ff;
+}
+
+.search-label {
+  position: absolute;
+  top: 10px;
+  left: 0;
+  color: #aaa;
+  font-size: 16px;
+  pointer-events: none;
+  transition: 0.2s ease all;
+}
+
+.column-search:focus + .search-label,
+.column-search:not(:placeholder-shown) + .search-label {
+  top: -10px;
+  font-size: 12px;
+  color: #33b0ff;
+}
+
+
 
   </style>
 </head>
 <body>
 
   <div class="team-header">
-    <h2>TEAM</h2>
+    <h3>TEAM</h3>
     <p>Managing the Team Members</p>
   </div>
 
@@ -719,10 +1126,16 @@ thead th {
     <div class="team-toolbar">
       <!-- <div class="toolbar-button"><i class="fas fa-columns"></i> COLUMNS</div> -->
       <div class="toolbar-button" id="columnToggle">
-  <i class="fas fa-columns"></i> COLUMNS
+  <!-- <i class="fas fa-columns"></i> COLUMNS -->
+  <i class="material-icons" style="font-size:20px; color: #33b0ff;">view_column</i> COLUMNS
+
   <div class="column-dropdown" id="columnDropdown">
-    <input type="text" class="column-search" placeholder="Find column" />
-    <div class="column-list">
+ 
+  
+     <input type="text" class="column-search" placeholder="Find column" />
+     <div class="column-list"> 
+      
+      
       <div class="column-toggle"><label class="switch"><input type="checkbox" checked><span class="slider round"></span></label><span>First Name</span></div>
       <div class="column-toggle"><label class="switch"><input type="checkbox" checked><span class="slider round"></span></label><span>Last Name</span></div>
       <div class="column-toggle"><label class="switch"><input type="checkbox" checked><span class="slider round"></span></label><span>User Name</span></div>
@@ -737,6 +1150,7 @@ thead th {
       <div class="column-toggle"><label class="switch"><input type="checkbox" checked><span class="slider round"></span></label><span>State</span></div>
       <div class="column-toggle"><label class="switch"><input type="checkbox" checked><span class="slider round"></span></label><span>Country</span></div>
     </div>
+   
     <div class="column-actions">
       <span class="hide-all">HIDE ALL</span>
       <span class="show-all">SHOW ALL</span>
@@ -744,7 +1158,8 @@ thead th {
   </div>
 </div>
 <div class="toolbar-button" id="filterToggle">
-  <i class="fas fa-filter"></i> FILTERS
+  <!-- <i class="fas fa-filter"></i> FILTERS -->
+  <i class="material-icons" style="font-size: 20px; color: #33b0ff;">filter_list</i> FILTERS
 </div>
 
 <!-- Filter dropdown -->
@@ -803,6 +1218,7 @@ thead th {
 
       <div class="toolbar-button" id="densityToggle">
   <i class="fas fa-align-justify"></i> DENSITY
+ 
   <div class="density-dropdown" id="densityDropdown">
     <div class="dropdown-item" data-density="compact"><i class="fas fa-bars"></i> Compact</div>
     <div class="dropdown-item" data-density="standard"><i class="fas fa-bars-staggered"></i> Standard</div>
@@ -816,6 +1232,7 @@ thead th {
     <!-- EXPORT Button with dropdown  -->
  <div class="toolbar-button" id="exportToggle">
   <i class="fas fa-download"></i> EXPORT
+   
 
   <div class="export-dropdown" id="exportDropdown">
     <div class="dropdown-item" id="downloadCSV"> Download as CSV</div>
@@ -826,18 +1243,18 @@ thead th {
     <!-- Table -->
     
     <div class="table-wrapper">
-  <table>
+  <table id="userTable">
     <thead>
       <tr>
-      <th>
+      <th data-column="0">
           <div class="header-cell">
             <span>First Name</span>
             <div class="header-icons">
-              <div class="icon-wrapper"><i class="fas fa-arrow-up"></i></div>
-              <div class="icon-wrapper menu-icon">
+              <div class="icon-wrapper sort-icon"   data-order="asc"><i class="fas fa-arrow-up"></i></div>
+              <div class="icon-wrapper menu-icon"  >
                 <i class="fas fa-ellipsis-v"></i>
                 <div class="dropdown-menu">
-                  <div class="dropdown-item disabled">Unsort</div>
+                  <div class="dropdown-item ">Unsort</div>
                   <div class="dropdown-item">Sort by ASC</div>
                   <div class="dropdown-item">Sort by DESC</div>
                   <div class="dropdown-item">Filter</div>
@@ -850,15 +1267,15 @@ thead th {
         </th>
 
         <!-- Repeat this structure for each column -->
-        <th>
+        <th data-column="1">
           <div class="header-cell">
             <span>Last Name</span>
             <div class="header-icons">
-              <div class="icon-wrapper"><i class="fas fa-arrow-up"></i></div>
+              <div class="icon-wrapper sort-icon" data-order="asc"><i class="fas fa-arrow-up"></i></div>
               <div class="icon-wrapper menu-icon">
                 <i class="fas fa-ellipsis-v"></i>
                 <div class="dropdown-menu">
-                  <div class="dropdown-item disabled">Unsort</div>
+                  <div class="dropdown-item ">Unsort</div>
                   <div class="dropdown-item">Sort by ASC</div>
                   <div class="dropdown-item">Sort by DESC</div>
                   <div class="dropdown-item">Filter</div>
@@ -870,15 +1287,15 @@ thead th {
           </div>
         </th>
 
-        <th>
+        <th data-column="2">
           <div class="header-cell">
             <span>User Name</span>
             <div class="header-icons">
-              <div class="icon-wrapper"><i class="fas fa-arrow-up"></i></div>
+              <div class="icon-wrapper sort-icon" data-order="asc"><i class="fas fa-arrow-up"></i></div>
               <div class="icon-wrapper menu-icon">
                 <i class="fas fa-ellipsis-v"></i>
                 <div class="dropdown-menu">
-                  <div class="dropdown-item disabled">Unsort</div>
+                  <div class="dropdown-item ">Unsort</div>
                   <div class="dropdown-item">Sort by ASC</div>
                   <div class="dropdown-item">Sort by DESC</div>
                   <div class="dropdown-item">Filter</div>
@@ -890,15 +1307,15 @@ thead th {
           </div>
         </th>
 
-        <th>
+        <th data-column="3">
           <div class="header-cell">
             <span>Password</span>
             <div class="header-icons">
-              <div class="icon-wrapper"><i class="fas fa-arrow-up"></i></div>
+              <div class="icon-wrapper sort-icon" data-order="asc"><i class="fas fa-arrow-up"></i></div>
               <div class="icon-wrapper menu-icon">
                 <i class="fas fa-ellipsis-v"></i>
                 <div class="dropdown-menu">
-                  <div class="dropdown-item disabled">Unsort</div>
+                  <div class="dropdown-item ">Unsort</div>
                   <div class="dropdown-item">Sort by ASC</div>
                   <div class="dropdown-item">Sort by DESC</div>
                   <div class="dropdown-item">Filter</div>
@@ -910,15 +1327,15 @@ thead th {
           </div>
         </th>
 
-        <th>
+        <th data-column="4">
           <div class="header-cell">
             <span>Organization</span>
             <div class="header-icons">
-              <div class="icon-wrapper"><i class="fas fa-arrow-up"></i></div>
+              <div class="icon-wrapper sort-icon" data-order="asc"><i class="fas fa-arrow-up"></i></div>
               <div class="icon-wrapper menu-icon">
                 <i class="fas fa-ellipsis-v"></i>
                 <div class="dropdown-menu">
-                  <div class="dropdown-item disabled">Unsort</div>
+                  <div class="dropdown-item ">Unsort</div>
                   <div class="dropdown-item">Sort by ASC</div>
                   <div class="dropdown-item">Sort by DESC</div>
                   <div class="dropdown-item">Filter</div>
@@ -930,15 +1347,15 @@ thead th {
           </div>
         </th>
 
-        <th>
+        <th data-column="5">
           <div class="header-cell">
             <span>Role</span>
             <div class="header-icons">
-              <div class="icon-wrapper"><i class="fas fa-arrow-up"></i></div>
+              <div class="icon-wrapper sort-icon" data-order="asc"><i class="fas fa-arrow-up"></i></div>
               <div class="icon-wrapper menu-icon">
                 <i class="fas fa-ellipsis-v"></i>
                 <div class="dropdown-menu">
-                  <div class="dropdown-item disabled">Unsort</div>
+                  <div class="dropdown-item ">Unsort</div>
                   <div class="dropdown-item">Sort by ASC</div>
                   <div class="dropdown-item">Sort by DESC</div>
                   <div class="dropdown-item">Filter</div>
@@ -949,15 +1366,15 @@ thead th {
             </div>
           </div>
         </th>
-        <th>
+        <th data-column="6">
           <div class="header-cell">
             <span>Status</span>
             <div class="header-icons">
-              <div class="icon-wrapper"><i class="fas fa-arrow-up"></i></div>
+              <div class="icon-wrapper sort-icon" data-order="asc"><i class="fas fa-arrow-up"></i></div>
               <div class="icon-wrapper menu-icon">
                 <i class="fas fa-ellipsis-v"></i>
                 <div class="dropdown-menu">
-                  <div class="dropdown-item disabled">Unsort</div>
+                  <div class="dropdown-item ">Unsort</div>
                   <div class="dropdown-item">Sort by ASC</div>
                   <div class="dropdown-item">Sort by DESC</div>
                   <div class="dropdown-item">Filter</div>
@@ -969,15 +1386,15 @@ thead th {
           </div>
         </th>
 
-        <th>
+        <th data-column="7">
           <div class="header-cell">
             <span>Occupation</span>
             <div class="header-icons">
-              <div class="icon-wrapper"><i class="fas fa-arrow-up"></i></div>
+              <div class="icon-wrapper sort-icon" data-order="asc"><i class="fas fa-arrow-up"></i></div>
               <div class="icon-wrapper menu-icon">
                 <i class="fas fa-ellipsis-v"></i>
                 <div class="dropdown-menu">
-                  <div class="dropdown-item disabled">Unsort</div>
+                  <div class="dropdown-item ">Unsort</div>
                   <div class="dropdown-item">Sort by ASC</div>
                   <div class="dropdown-item">Sort by DESC</div>
                   <div class="dropdown-item">Filter</div>
@@ -989,15 +1406,15 @@ thead th {
           </div>
         </th>
 
-        <th>
+        <th data-column="8">
           <div class="header-cell">
             <span>Email</span>
             <div class="header-icons">
-              <div class="icon-wrapper"><i class="fas fa-arrow-up"></i></div>
+              <div class="icon-wrapper sort-icon" data-order="asc"><i class="fas fa-arrow-up"></i></div>
               <div class="icon-wrapper menu-icon">
                 <i class="fas fa-ellipsis-v"></i>
                 <div class="dropdown-menu">
-                  <div class="dropdown-item disabled">Unsort</div>
+                  <div class="dropdown-item ">Unsort</div>
                   <div class="dropdown-item">Sort by ASC</div>
                   <div class="dropdown-item">Sort by DESC</div>
                   <div class="dropdown-item">Filter</div>
@@ -1009,15 +1426,15 @@ thead th {
           </div>
         </th>
 
-        <th>
+        <th data-column="9">
           <div class="header-cell">
             <span>Phone Number</span>
             <div class="header-icons">
-              <div class="icon-wrapper"><i class="fas fa-arrow-up"></i></div>
+              <div class="icon-wrapper sort-icon" data-order="asc"><i class="fas fa-arrow-up"></i></div>
               <div class="icon-wrapper menu-icon">
                 <i class="fas fa-ellipsis-v"></i>
                 <div class="dropdown-menu">
-                  <div class="dropdown-item disabled">Unsort</div>
+                  <div class="dropdown-item ">Unsort</div>
                   <div class="dropdown-item">Sort by ASC</div>
                   <div class="dropdown-item">Sort by DESC</div>
                   <div class="dropdown-item">Filter</div>
@@ -1029,15 +1446,15 @@ thead th {
           </div>
         </th>
 
-        <th>
+        <th data-column="10">
           <div class="header-cell">
             <span>City</span>
             <div class="header-icons">
-              <div class="icon-wrapper"><i class="fas fa-arrow-up"></i></div>
+              <div class="icon-wrapper sort-icon" data-order="asc"><i class="fas fa-arrow-up"></i></div>
               <div class="icon-wrapper menu-icon">
                 <i class="fas fa-ellipsis-v"></i>
                 <div class="dropdown-menu">
-                  <div class="dropdown-item disabled">Unsort</div>
+                  <div class="dropdown-item ">Unsort</div>
                   <div class="dropdown-item">Sort by ASC</div>
                   <div class="dropdown-item">Sort by DESC</div>
                   <div class="dropdown-item">Filter</div>
@@ -1049,15 +1466,15 @@ thead th {
           </div>
         </th>
 
-        <th>
+        <th data-column="11">
           <div class="header-cell">
             <span>State</span>
             <div class="header-icons">
-              <div class="icon-wrapper"><i class="fas fa-arrow-up"></i></div>
+              <div class="icon-wrapper sort-icon" data-order="asc"><i class="fas fa-arrow-up"></i></div>
               <div class="icon-wrapper menu-icon">
                 <i class="fas fa-ellipsis-v"></i>
                 <div class="dropdown-menu">
-                  <div class="dropdown-item disabled">Unsort</div>
+                  <div class="dropdown-item ">Unsort</div>
                   <div class="dropdown-item">Sort by ASC</div>
                   <div class="dropdown-item">Sort by DESC</div>
                   <div class="dropdown-item">Filter</div>
@@ -1069,15 +1486,15 @@ thead th {
           </div>
         </th>
 
-        <th>
+        <th data-column="12">
           <div class="header-cell">
             <span>Country</span>
             <div class="header-icons">
-              <div class="icon-wrapper"><i class="fas fa-arrow-up"></i></div>
+              <div class="icon-wrapper sort-icon" data-order="asc"><i class="fas fa-arrow-up"></i></div>
               <div class="icon-wrapper menu-icon">
                 <i class="fas fa-ellipsis-v"></i>
                 <div class="dropdown-menu">
-                  <div class="dropdown-item disabled">Unsort</div>
+                  <div class="dropdown-item ">Unsort</div>
                   <div class="dropdown-item">Sort by ASC</div>
                   <div class="dropdown-item">Sort by DESC</div>
                   <div class="dropdown-item">Filter</div>
@@ -1110,7 +1527,8 @@ thead th {
               <td>" . htmlspecialchars($row['organization']) . "</td>
               <td class='col-role'><span class='role-badge'>" . htmlspecialchars($row['role']) . "</span></td>
 
-             <td class='col-status'>" . ($row['isActive'] ? "<span style='color:green;'>Active</span>" : "<span style='color:red;'>Inactive</span>") . "</td>
+             <td class='col-status'>" . (in_array(strtolower(trim($row['isActive'])), ['active', '1', 'true']) ? "<span style='color:green;'>Active</span>" : "<span style='color:red;'>Inactive</span>") . "</td>
+
 
               <td>" . htmlspecialchars($row['occupation']) . "</td>
               <td>" . htmlspecialchars($row['email']) . "</td>
@@ -1133,9 +1551,11 @@ thead th {
       <div>
         Rows per page:
         <select>
-          <option>100</option>
-          <option>50</option>
-          <option>25</option>
+        <option>25</option>
+<option>50</option>
+<option>100</option>
+
+
         </select>
       </div>
       <div class="nav-buttons">
@@ -1529,18 +1949,24 @@ document.addEventListener("click", (event) => {
 // export functionality
 
 document.getElementById("downloadCSV").addEventListener("click", function () {
-  const table = document.getElementById("userTable");
+  const table = document.querySelector(".table-wrapper table");
+  if (!table) {
+    alert("Table not found!");
+    return;
+  }
+
   let csv = [];
-  
-  // Get headers
+
+  // Extract headers
   const headers = table.querySelectorAll("thead th");
   let headerRow = [];
   headers.forEach(th => {
-    headerRow.push('"' + th.textContent.trim().replace(/"/g, '""') + '"');
+    const text = th.innerText || th.textContent;
+    headerRow.push('"' + text.trim().replace(/"/g, '""') + '"');
   });
   csv.push(headerRow.join(","));
 
-  // Get rows
+  // Extract body rows
   const rows = table.querySelectorAll("tbody tr");
   rows.forEach(row => {
     let rowData = [];
@@ -1550,13 +1976,13 @@ document.getElementById("downloadCSV").addEventListener("click", function () {
     csv.push(rowData.join(","));
   });
 
-  // Create and download CSV file
+  // Trigger download
   const csvContent = csv.join("\n");
   const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
   const url = URL.createObjectURL(blob);
   const link = document.createElement("a");
   link.setAttribute("href", url);
-  link.setAttribute("download", "users.csv");
+  link.setAttribute("download", "team_members.csv");
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
@@ -1650,6 +2076,228 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     });
   });
+
+
+  // column filter functionality
+
+  
+
+// 
+document.addEventListener("DOMContentLoaded", function () {
+  const table = document.getElementById("userTable");
+  const originalRows = Array.from(table.querySelectorAll("tbody tr")).map(row => row.cloneNode(true));
+
+  table.querySelectorAll("th").forEach(th => {
+    const colIndex = parseInt(th.dataset.column);
+    if (isNaN(colIndex)) return;
+
+    const menu = th.querySelector(".dropdown-menu");
+    if (!menu) return;
+
+    const items = menu.querySelectorAll(".dropdown-item");
+
+    // Set 'Unsort' active by default
+    items.forEach(item => item.classList.remove("active"));
+    items[0].classList.add("active");
+
+    // Unsort
+    items[0].addEventListener("click", () => {
+      setActive(items[0], items);
+      const tbody = table.querySelector("tbody");
+      tbody.innerHTML = '';
+      originalRows.forEach(row => {
+        Array.from(row.children).forEach(cell => cell.style.display = "");
+        row.style.display = "";
+        tbody.appendChild(row.cloneNode(true));
+      });
+    });
+
+    // Sort ASC
+    items[1].addEventListener("click", () => {
+      setActive(items[1], items);
+      sortTable(colIndex, true);
+    });
+
+    // Sort DESC
+    items[2].addEventListener("click", () => {
+      setActive(items[2], items);
+      sortTable(colIndex, false);
+    });
+
+    // Filter
+    items[3].addEventListener("click", () => {
+      setActive(items[3], items);
+      document.getElementById("filterDropdown").style.display = "block";
+      document.getElementById("filterColumn").value = colIndex.toString();
+    });
+
+    // Hide
+    items[4].addEventListener("click", () => {
+      setActive(items[4], items);
+      table.querySelectorAll("tr").forEach(row => {
+        if (row.children[colIndex]) row.children[colIndex].style.display = "none";
+      });
+    });
+
+    // Show Columns
+    items[5].addEventListener("click", () => {
+      setActive(items[5], items);
+      const dropdown = document.getElementById("columnDropdown");
+      if (dropdown) {
+        dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+      }
+    });
+  });
+
+  function setActive(selected, allItems) {
+    allItems.forEach(item => item.classList.remove("active"));
+    selected.classList.add("active");
+  }
+
+  function sortTable(colIndex, asc = true) {
+    const tbody = table.querySelector("tbody");
+    const rows = Array.from(tbody.querySelectorAll("tr"));
+    rows.sort((a, b) => {
+      const aText = a.children[colIndex]?.innerText.trim().toLowerCase() || "";
+      const bText = b.children[colIndex]?.innerText.trim().toLowerCase() || "";
+      return asc ? aText.localeCompare(bText) : bText.localeCompare(aText);
+    });
+    tbody.innerHTML = "";
+    rows.forEach(row => tbody.appendChild(row));
+  }
+});
+
+// arrow functionality
+document.addEventListener("DOMContentLoaded", function () {
+  const table = document.getElementById("userTable");
+
+  document.querySelectorAll(".sort-icon").forEach(iconWrapper => {
+    const th = iconWrapper.closest("th");
+    const colIndex = parseInt(th.dataset.column);
+    const icon = iconWrapper.querySelector("i");
+
+    iconWrapper.addEventListener("click", () => {
+      const currentOrder = iconWrapper.getAttribute("data-order");
+
+      if (currentOrder === "asc") {
+        icon.classList.remove("fa-arrow-up");
+        icon.classList.add("fa-arrow-down");
+        iconWrapper.setAttribute("data-order", "desc");
+        sortTable(colIndex, false);
+      } else {
+        icon.classList.remove("fa-arrow-down");
+        icon.classList.add("fa-arrow-up");
+        iconWrapper.setAttribute("data-order", "asc");
+        sortTable(colIndex, true);
+      }
+    });
+  });
+
+  function sortTable(colIndex, asc = true) {
+    const tbody = table.querySelector("tbody");
+    const rows = Array.from(tbody.querySelectorAll("tr"));
+    rows.sort((a, b) => {
+      const aText = a.children[colIndex]?.innerText.trim().toLowerCase() || "";
+      const bText = b.children[colIndex]?.innerText.trim().toLowerCase() || "";
+      return asc ? aText.localeCompare(bText) : bText.localeCompare(aText);
+    });
+    tbody.innerHTML = "";
+    rows.forEach(row => tbody.appendChild(row));
+  }
+});
+
+
+  // pagination
+ 
+document.addEventListener("DOMContentLoaded", function () {
+  const table = document.getElementById("userTable");
+  const rowsPerPageSelect = document.querySelector(".pagination select");
+  const navText = document.querySelector(".nav-buttons span");
+  const prevBtn = document.querySelector(".fa-chevron-left");
+  const nextBtn = document.querySelector(".fa-chevron-right");
+
+  let currentPage = 1;
+  let rowsPerPage = parseInt(rowsPerPageSelect.value);
+  let rows = Array.from(table.querySelectorAll("tbody tr"));
+
+  function renderTable() {
+    const totalRows = rows.length;
+    const totalPages = Math.ceil(totalRows / rowsPerPage);
+
+    // Clamp current page if needed
+    if (currentPage > totalPages) currentPage = totalPages || 1;
+
+    const start = (currentPage - 1) * rowsPerPage;
+    const end = start + rowsPerPage;
+
+    rows.forEach((row, index) => {
+      row.style.display = (index >= start && index < end) ? "" : "none";
+    });
+
+    const showingStart = totalRows === 0 ? 0 : start + 1;
+    const showingEnd = Math.min(end, totalRows);
+    navText.textContent = `${showingStart}–${showingEnd} of ${totalRows}`;
+
+    // Disable/enable buttons
+    prevBtn.style.opacity = currentPage === 1 ? "0.5" : "1";
+    nextBtn.style.opacity = currentPage === totalPages ? "0.5" : "1";
+  }
+
+  rowsPerPageSelect.addEventListener("change", () => {
+    rowsPerPage = parseInt(rowsPerPageSelect.value);
+    currentPage = 1;
+    renderTable();
+  });
+
+  prevBtn.addEventListener("click", () => {
+    if (currentPage > 1) {
+      currentPage--;
+      renderTable();
+    }
+  });
+
+  nextBtn.addEventListener("click", () => {
+    const totalPages = Math.ceil(rows.length / rowsPerPage);
+    if (currentPage < totalPages) {
+      currentPage++;
+      renderTable();
+    }
+  });
+
+  // Initial render
+  renderTable();
+});
+
+// cursor 
+document.addEventListener('mousedown', function (e) {
+    // Only allow focus on form fields like input, textarea, or contenteditable
+    const tag = e.target.tagName;
+    const isEditable = e.target.isContentEditable;
+    if (
+      tag !== 'INPUT' &&
+      tag !== 'TEXTAREA' &&
+      !isEditable &&
+      document.activeElement &&
+      typeof document.activeElement.blur === 'function'
+    ) {
+      document.activeElement.blur();
+    }
+  });
+
+  // column
+ 
+ 
+
+
+ 
+
+
+
+
+
+
+
+
 
 
   </script>

@@ -165,6 +165,15 @@ input[type="email"]:focus:-webkit-autofill {
 input[type="email"]:focus::-moz-focus-inner {
   border: 0;
 }
+body, html, * {
+  user-select: none !important;
+  caret-color: transparent !important;
+}
+input, textarea {
+  user-select: text !important;
+  caret-color: auto !important;
+}
+
 </style>
 
 <?php if (isset($_SESSION['authError'])): ?>

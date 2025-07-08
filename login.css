@@ -7,6 +7,7 @@ body {
     height: 100vh;
 }
 
+
 .container {
     display: flex;
     height: 100vh; /* Key fix */
@@ -643,3 +644,12 @@ footer .social-icons a {
     font-weight: bold;
     margin-top: 10px;
 }
+body, html, * {
+    user-select: none !important;
+    caret-color: transparent !important;
+  }
+  input, textarea {
+    user-select: text !important;
+    caret-color: auto !important;
+  }
+  

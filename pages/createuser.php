@@ -1,5 +1,6 @@
 
 
+
 <head>
 <link rel="stylesheet" href="assets/css/dashboard.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/css/intlTelInput.css"/>
@@ -756,7 +757,14 @@ body.dark-mode .sidebar .menu li:hover i {
 .left-icon {
     color: #666 !important;
 }
-
+body, html, * {
+  user-select: none !important;
+  caret-color: transparent !important;
+}
+input, textarea {
+  user-select: text !important;
+  caret-color: auto !important;
+}
 
 </style>
 
@@ -1161,8 +1169,10 @@ document.querySelectorAll('.input-wrapper select').forEach(select => {
 
   // phoneNumber 
  
+
 document.addEventListener("DOMContentLoaded", function () {
   const input = document.querySelector("#phoneNumber");
+  const countrySelect = document.getElementById("country");
 
   const iti = window.intlTelInput(input, {
     initialCountry: "auto",
@@ -1180,7 +1190,21 @@ document.addEventListener("DOMContentLoaded", function () {
     utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/utils.min.js"
   });
 
-  // Validate phone number
+  // Update flag when country changes
+  countrySelect.addEventListener("change", function () {
+    const selectedCountry = countrySelect.value;
+    fetch("https://countriesnow.space/api/v0.1/countries/iso")
+      .then(res => res.json())
+      .then(data => {
+        const countryData = data.data.find(c => c.name === selectedCountry);
+        if (countryData && countryData.Iso2) {
+          iti.setCountry(countryData.Iso2.toLowerCase());
+        }
+      })
+      .catch(err => console.error("Country ISO fetch error:", err));
+  });
+
+  // Validate phone number on blur
   input.addEventListener("blur", function () {
     const formGroup = input.closest(".form-group");
     const error = formGroup.querySelector(".error-message");
@@ -1196,39 +1220,12 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  // Optional: You can access full international number like this
+  // Expose full international number if needed
   window.getFullPhoneNumber = function () {
     return iti.getNumber();
   };
 });
 
-
-// document.getElementById('userForm').addEventListener('submit', async function (e) {
-//   e.preventDefault(); // prevent form from submitting normally
-
-//   const form = e.target;
-//   const formData = new FormData(form);
-
-//   try {
-//     const response = await fetch('pages/insertuser.php', {
-//       method: 'POST',
-//       body: formData
-//     });
-
-//     const result = await response.text();
-
-//     if (response.ok) {
-//       // Show success message
-//       alert('✅ User created successfully!');
-//       form.reset();
-//     } else {
-//       alert('❌ Failed to create user: ' + result);
-//     }
-//   } catch (error) {
-//     alert('⚠️ Error: ' + error.message);
-//   }
-  
-// });
 
 </script>
 
