@@ -13,10 +13,14 @@
       margin: 0;
       padding: 0;
     }
-
     .team-header {
-      padding: 20px;
-    }
+  margin: -50px 50px 10px 0;
+  padding: 0px 20px 10px 20px;
+}
+
+
+
+
 
   /* Header left-side icon (close/open icon) in dark mode */
 body.dark-mode .left-icon,
@@ -38,10 +42,11 @@ body.dark-mode #themeToggle i {
 }
     .team-header h2{
       color: #33B0F7;
-      font-weight: 800;
-      font-size:14px;
+      font-weight: 900;
+      font-size:15px;
       margin-bottom: 5px;
       font-family: Poppins, sans-serif;
+      /* margin-bottom: 30px; */
     }
 
     .team-header p {
@@ -55,6 +60,7 @@ body.dark-mode #themeToggle i {
       border: 1px solid #ddd;
       border-radius: 8px;
       overflow: hidden;
+      margin-top: 0;
      
     }
 
@@ -1073,16 +1079,81 @@ body.dark-mode .filter-dropdown span {
   margin-right: 0px;
   color: #2196f3; /* Matches the blue in the image */
 }
+.date-filter-bar {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+  margin: 20px 20px 10px 0;
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  margin-top: 40px;
+  
+
+}
+
+.date-input {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #33B0F7;
+}
+
+.date-input input[type="text"] { 
+  width: 100px;
+    height: 25px;
+    text-align: center;
+    border: 1px solid rgb(220, 220, 220);
+    font-family: poppins, sans-serif;
+}
+
+.submit-btn {
+  padding: 5px 15px;
+  background-color: #33b0ff;
+  color: white;
+  font-family: Poppins, sans-serif;
+    font-weight: 500;
+    font-size: 0.75rem;
+    line-height: 1.75;
+    text-transform: uppercase;
+   border: none;
+    border-radius: 4px;
+  transition: background 0.3s ease;
+}
+
+.submit-btn:hover {
+  background-color: #229be0;
+}
+
 
 
   </style>
 </head>
 <body>
 
-  <div class="team-header">
-    <h2>PARSED LOGS</h2>
-    <p>List of Parsed Logs</p>
+<!-- Date Filter Bar FIRST -->
+
+<div class="date-filter-bar">
+  <div class="date-input">
+    <label for="startDate">Start Date :</label>
+    <input type="text" id="startDate" name="startDate" placeholder="DD-MM-YYYY">
   </div>
+  <div class="date-input">
+    <label for="endDate">End Date :</label>
+    <input type="text" id="endDate" name="endDate" placeholder="DD-MM-YYYY">
+  </div>
+  <button class="submit-btn">SUBMIT</button>
+</div>
+
+
+<!-- Then the Team Header -->
+<div class="team-header">
+  <h2>PARSED LOGS</h2>
+  <p>List of Parsed Logs</p>
+</div>
+
+
+
 
   <div class="team-container">
     <!-- Toolbar -->
@@ -1090,7 +1161,7 @@ body.dark-mode .filter-dropdown span {
       <!-- <div class="toolbar-button"><i class="fas fa-columns"></i> COLUMNS</div> -->
       <div class="toolbar-button" id="columnToggle">
   <!-- <i class="fas fa-columns"></i> COLUMNS -->
-  <i class="material-icons" style="font-size: 14px; color: #33b0ff;">view_column</i> COLUMNS
+  <i class="material-icons" style="font-size: 18px; color: #33b0ff;">view_column</i> COLUMNS
   <div class="column-dropdown" id="columnDropdown">
     <input type="text" class="column-search" placeholder="Find column" />
     <div class="column-list">
@@ -1114,7 +1185,7 @@ body.dark-mode .filter-dropdown span {
 </div>
 <div class="toolbar-button" id="filterToggle">
   <!-- <i class="fas fa-filter"></i> FILTERS -->
-  <i class="material-icons" style="font-size: 14px; color: #33b0ff;">filter_list</i> FILTERS
+  <i class="material-icons" style="font-size: 18px; color: #33b0ff;">filter_list</i> FILTERS
 </div>
 
 <!-- Filter dropdown -->
@@ -1189,6 +1260,8 @@ body.dark-mode .filter-dropdown span {
   </div>
 </div>
 </div>
+
+
 
     <!-- Table -->
     
@@ -1395,7 +1468,14 @@ body.dark-mode .filter-dropdown span {
     </div>
   </div>
 </th>
-<?php
+
+      </tr>
+    </thead>
+
+
+      <tbody>
+        <!-- No data; only layout -->
+        <?php
 $mysqli = new mysqli('localhost', 'root', '', 'depotrace_parsedlogs');
 $mysqli->set_charset('utf8mb4');
 
@@ -1423,14 +1503,7 @@ if ($result && $result->num_rows > 0) {
 ?>
 
 
-       
       
-      </tr>
-    </thead>
-
-
-      <tbody>
-        <!-- No data; only layout -->
        
       </tbody>
     </table>
@@ -2098,9 +2171,6 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
-
-  // pagination
- 
 document.addEventListener("DOMContentLoaded", function () {
   const table = document.getElementById("userTable");
   const rowsPerPageSelect = document.querySelector(".pagination select");
@@ -2115,8 +2185,6 @@ document.addEventListener("DOMContentLoaded", function () {
   function renderTable() {
     const totalRows = rows.length;
     const totalPages = Math.ceil(totalRows / rowsPerPage);
-
-    // Clamp current page if needed
     if (currentPage > totalPages) currentPage = totalPages || 1;
 
     const start = (currentPage - 1) * rowsPerPage;
@@ -2130,9 +2198,10 @@ document.addEventListener("DOMContentLoaded", function () {
     const showingEnd = Math.min(end, totalRows);
     navText.textContent = `${showingStart}–${showingEnd} of ${totalRows}`;
 
-    // Disable/enable buttons
     prevBtn.style.opacity = currentPage === 1 ? "0.5" : "1";
     nextBtn.style.opacity = currentPage === totalPages ? "0.5" : "1";
+    prevBtn.style.pointerEvents = currentPage === 1 ? "none" : "auto";
+    nextBtn.style.pointerEvents = currentPage === totalPages ? "none" : "auto";
   }
 
   rowsPerPageSelect.addEventListener("change", () => {
@@ -2156,9 +2225,9 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  // Initial render
   renderTable();
 });
+
 
 // cursor 
 document.addEventListener('mousedown', function (e) {

@@ -1611,10 +1611,11 @@ const columnToggle = document.getElementById("columnToggle");
   });
 
   document.addEventListener("click", (e) => {
-    if (!columnToggle.contains(e.target)) {
-      columnDropdown.style.display = "none";
-    }
-  });
+  if (!columnToggle.contains(e.target) && !columnDropdown.contains(e.target)) {
+    columnDropdown.style.display = "none";
+  }
+});
+
 
   // Hide All / Show All Functionality
   document.querySelector(".hide-all").addEventListener("click", () => {
@@ -2286,19 +2287,10 @@ document.addEventListener('mousedown', function (e) {
 
   // column
  
- 
-
-
- 
 
 
 
-
-
-
-
-
-
+  
 
   </script>
 </body>
